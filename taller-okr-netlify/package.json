@@ -1,0 +1,9 @@
+{
+  "name": "taller-okr",
+  "version": "3.0.0",
+  "private": true,
+  "description": "Taller de OKRs gamificado — Netlify + Netlify Blobs",
+  "dependencies": {
+    "@netlify/blobs": "11.1.5"
+  }
+}

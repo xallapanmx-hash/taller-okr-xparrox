@@ -1,0 +1,1969 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Taller de OKRs</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+:root{
+  --bg:#F5F3FF; --ink:#1E1B4B; --muted:#6B7280; --card:#fff; --pri:#6C4CF1; --pri-d:#4B2FC9;
+  --ok:#10B981; --warn:#F59E0B; --bad:#EF4444; --line:#E7E2FF; --r:20px;
+  --sh:0 6px 24px rgba(76,52,200,.10);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:'Nunito',system-ui,sans-serif;color:var(--ink);background:var(--bg);
+  background-image:radial-gradient(circle at 10% 0%,#EDE9FE 0,transparent 35%),radial-gradient(circle at 100% 30%,#FCE7F3 0,transparent 30%);
+  background-attachment:fixed;min-height:100vh;font-size:16px}
+h1,h2,h3,.brand,.wow{font-family:'Baloo 2',system-ui,sans-serif;line-height:1.1;margin:0}
+h1{font-size:2rem} h2{font-size:1.45rem} h3{font-size:1.15rem}
+p{margin:.3em 0}
+button{font:inherit}
+.btn{border:0;border-radius:14px;padding:10px 16px;font-weight:800;cursor:pointer;transition:transform .08s, box-shadow .1s;display:inline-flex;align-items:center;gap:8px;justify-content:center;text-decoration:none;white-space:nowrap}
+.btn:active{transform:translateY(2px)}
+.btn.primary{background:var(--pri);color:#fff;box-shadow:0 4px 0 var(--pri-d)}
+.btn.primary:active{box-shadow:0 2px 0 var(--pri-d)}
+.btn.ghost{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 2px var(--line),0 3px 0 var(--line)}
+.btn.green{background:var(--ok);color:#fff;box-shadow:0 4px 0 #047857}
+.btn.big{font-size:1.12rem;padding:14px 22px;border-radius:18px;font-family:'Baloo 2',sans-serif}
+.btn.small{padding:6px 10px;font-size:.85rem;border-radius:10px}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.link{background:none;border:0;color:var(--pri);font-weight:800;cursor:pointer;text-decoration:underline;padding:4px}
+input,textarea,select{font:inherit;border:2px solid var(--line);border-radius:14px;padding:10px 12px;width:100%;background:#fff;color:var(--ink);outline:none;transition:border-color .15s, box-shadow .15s}
+textarea{resize:vertical}
+input:focus,textarea:focus,select:focus{border-color:var(--pri);box-shadow:0 0 0 4px rgba(108,76,241,.15)}
+input:disabled,textarea:disabled,select:disabled{background:#F9FAFB;color:#6B7280}
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:18px}
+.hint{color:var(--muted);font-size:.9rem}
+.lbl{display:block;font-weight:800;font-size:.92rem;margin:12px 0 6px}
+.x{border:0;background:#F3F4F6;border-radius:10px;cursor:pointer;width:30px;height:30px;font-size:1rem;flex:none;display:grid;place-items:center}
+.x:hover{background:#FEE2E2}
+.warn{background:#FFF7E6;border:2px solid #FCD34D;border-radius:14px;padding:10px 12px;margin:10px 0;font-weight:700;font-size:.92rem}
+.okbox{background:#ECFDF5;border:2px solid #6EE7B7;border-radius:14px;padding:10px 12px;margin:10px 0;font-weight:800}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-weight:800;font-size:.82rem;background:#EEF2FF}
+.container{max-width:1200px;margin:0 auto;padding:20px}
+.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.spacer{flex:1}
+
+/* ---------- Landing ---------- */
+.landing{max-width:1000px;margin:0 auto;padding:40px 20px}
+.hero{text-align:center;margin-bottom:28px}
+.logo-big{font-size:4.5rem;animation:float 3s ease-in-out infinite}
+.hero h1{font-size:3rem;background:linear-gradient(90deg,#6C4CF1,#EC4899);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{font-size:1.2rem;color:#4B5563;max-width:620px;margin:8px auto 0}
+.choice{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.choice-card{text-align:center;padding:28px}
+.choice-card .ce{font-size:3.2rem}
+.choice-card form{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.code-input{text-align:center;font-size:1.8rem;letter-spacing:.3em;font-weight:900;text-transform:uppercase;font-family:'Baloo 2',sans-serif}
+.demo-box{margin-top:22px;text-align:center;background:#fff;border:2px dashed #C4B5FD;border-radius:18px;padding:14px}
+.demo-box .row{justify-content:center;margin-top:8px}
+.how{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}
+.how .card{text-align:center}
+.how .e{font-size:2.2rem}
+
+/* ---------- Shell (admin / client) ---------- */
+.topbar{display:flex;align-items:center;gap:14px;padding:12px 20px;background:rgba(255,255,255,.85);backdrop-filter:blur(8px);position:sticky;top:0;z-index:20;box-shadow:0 1px 0 var(--line)}
+.brand{font-size:1.3rem;display:flex;align-items:center;gap:8px}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:16px 0}
+.tile{background:#fff;border-radius:18px;box-shadow:var(--sh);padding:16px;display:flex;gap:12px;align-items:center}
+.tile .te{font-size:2rem}
+.tile .tn{font-family:'Baloo 2';font-size:1.8rem;line-height:1}
+.tile .tl{color:var(--muted);font-weight:700;font-size:.88rem}
+.client-grid,.ws-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;margin-top:12px}
+.client-card h3{display:flex;gap:8px;align-items:center}
+.vbar{height:10px;border-radius:10px;background:#F3F4F6;overflow:hidden;margin:10px 0 6px}
+.vbar>div{height:100%;border-radius:10px}
+.cc-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.client-hero{display:flex;gap:18px;align-items:center;padding:24px;background:linear-gradient(120deg,#6C4CF1,#A855F7 60%,#EC4899);color:#fff;border-radius:26px;box-shadow:var(--sh)}
+.client-hero .he{font-size:3.4rem}
+.client-hero h1{font-size:2.2rem}
+.ws-card{cursor:pointer;transition:transform .15s}
+.ws-card:hover{transform:translateY(-4px)}
+.ws-card .wsc-top{display:flex;align-items:center;gap:12px}
+.ws-card .wsc-ic{font-size:2.2rem;width:56px;height:56px;border-radius:16px;display:grid;place-items:center;background:#F5F3FF}
+.mini-journey{display:flex;gap:6px;margin:14px 0 8px}
+.mini-journey span{flex:1;height:8px;border-radius:8px;background:#EDE9FE}
+.mini-journey span.on{background:var(--pri)}
+.add-card{border:3px dashed #C4B5FD;background:rgba(255,255,255,.6);border-radius:var(--r);min-height:160px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-size:2.4rem;color:var(--pri);font-weight:900;transition:.15s}
+.add-card span{font-size:1rem}
+.add-card:hover{background:#fff;transform:translateY(-2px)}
+.add-card.wide{min-height:70px;flex-direction:row;font-size:1.1rem;width:100%}
+.empty{text-align:center;padding:40px 20px}
+.empty .ee{font-size:4rem}
+
+/* ---------- Workshop ---------- */
+.ws-title .t{font-family:'Baloo 2';font-size:1.25rem;line-height:1.1}
+.ws-title .sub{color:var(--muted);font-weight:700;font-size:.85rem}
+.hud{margin-left:auto;display:flex;align-items:center;gap:10px;background:#fff;border-radius:16px;padding:6px 12px;box-shadow:inset 0 0 0 2px var(--line)}
+.hud .lvl{font-weight:800;white-space:nowrap}
+.xpbar{width:120px;height:12px;border-radius:12px;background:#EDE9FE;overflow:hidden}
+.xpbar>div{height:100%;background:linear-gradient(90deg,#F59E0B,#EC4899,#8B5CF6);border-radius:12px;transition:width .6s}
+.xpn{font-weight:900;white-space:nowrap;font-size:.92rem}
+#saving{font-weight:700;color:var(--muted);font-size:.78rem;margin-left:4px}
+.code-chip{border:0;background:#1E1B4B;color:#fff;border-radius:14px;padding:8px 12px;font-weight:800;cursor:pointer;white-space:nowrap}
+.code-chip b{letter-spacing:.12em;color:#FDE68A}
+.ro-banner{background:#FEF2F2;color:#991B1B;text-align:center;font-weight:800;padding:10px}
+.journey{display:flex;align-items:flex-start;padding:16px 20px 6px;overflow-x:auto;max-width:1300px;margin:0 auto}
+.stop{flex:1;min-width:86px;display:flex;flex-direction:column;align-items:center;gap:6px;background:none;border:0;cursor:pointer;position:relative;color:var(--muted);padding:0}
+.stop .dot{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;font-size:1.55rem;background:#fff;border:3px solid var(--line);position:relative;z-index:1;transition:.2s}
+.stop:not(:last-child)::after{content:'';position:absolute;top:25px;left:calc(50% + 30px);right:calc(-50% + 30px);height:5px;border-radius:5px;background:repeating-linear-gradient(90deg,#D9D3FB 0 8px,transparent 8px 14px)}
+.stop.done:not(:last-child)::after{background:var(--sc)}
+.stop.done .dot{border-color:var(--sc);background:color-mix(in srgb,var(--sc) 18%,#fff)}
+.stop.done .dot::after{content:'✓';position:absolute;right:-6px;top:-6px;width:22px;height:22px;border-radius:50%;background:var(--ok);color:#fff;font-size:.8rem;display:grid;place-items:center;font-weight:900;border:2px solid #fff}
+.stop.current .dot{border-color:var(--sc);background:color-mix(in srgb,var(--sc) 22%,#fff);transform:scale(1.18);animation:pulse 1.8s infinite}
+.stop.locked{cursor:default;opacity:.55}
+.stop.locked .dot{filter:grayscale(1)}
+.stop .slbl{font-size:.78rem;font-weight:800;text-align:center;line-height:1.1}
+.stop.current .slbl{color:var(--ink)}
+.phase{max-width:1300px;margin:0 auto;padding:10px 20px 120px}
+.phase-head{display:flex;gap:16px;align-items:center;margin:8px 0 10px}
+.phase-icon{font-size:2.6rem;width:72px;height:72px;border-radius:22px;display:grid;place-items:center;background:color-mix(in srgb,var(--pc) 18%,#fff);box-shadow:inset 0 0 0 3px color-mix(in srgb,var(--pc) 40%,#fff);flex:none}
+.phase-head .step{font-weight:900;color:var(--pc);text-transform:uppercase;font-size:.8rem;letter-spacing:.08em}
+.phase-head h1{font-size:2.2rem}
+.phase-head p{color:#4B5563;font-weight:700}
+.coach{display:flex;gap:12px;align-items:flex-start;margin:6px 0 18px}
+.owl{font-size:2.6rem;animation:float 3s ease-in-out infinite;flex:none}
+.say{background:#fff;border-radius:18px;padding:12px 16px;box-shadow:var(--sh);position:relative;font-weight:700;max-width:860px}
+.say::before{content:'';position:absolute;left:-8px;top:18px;border:8px solid transparent;border-right-color:#fff;border-left:0}
+.say b{color:var(--pri)}
+.bottom-nav{position:fixed;left:0;right:0;bottom:0;display:flex;align-items:center;gap:12px;padding:12px 20px;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);box-shadow:0 -1px 0 var(--line);z-index:15}
+.bottom-nav .mid{flex:1;text-align:center;font-weight:800;color:var(--muted)}
+
+.strip{display:flex;align-items:stretch;gap:8px;margin:0 0 16px;flex-wrap:wrap}
+.strip-i{flex:1;min-width:200px;display:flex;gap:10px;align-items:center;background:#fff;border-radius:18px;padding:10px 14px;box-shadow:inset 0 0 0 2px var(--line);opacity:.7}
+.strip-i.on{opacity:1;box-shadow:inset 0 0 0 3px var(--pc),var(--sh)}
+.si-ic{font-size:1.9rem}
+.si-q{font-weight:800;font-size:.9rem}
+.si-ex{color:var(--muted);font-size:.8rem}
+.strip-arrow{display:grid;place-items:center;font-size:1.4rem;color:#A78BFA}
+
+/* contexto */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.ctx .card-emoji{font-size:2.2rem}
+.ctx h3{margin:4px 0}
+.stickies{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0}
+.sticky{background:var(--sc);padding:12px 34px 12px 12px;border-radius:6px 6px 16px 6px;min-width:120px;max-width:220px;font-weight:700;position:relative;box-shadow:0 4px 10px rgba(0,0,0,.08);transform:rotate(var(--rot,-1deg));animation:popIn .3s both}
+.sticky .x{position:absolute;right:4px;top:4px;width:24px;height:24px;background:rgba(255,255,255,.6)}
+.add-row{display:flex;gap:8px;margin-top:8px}
+.add-row input{flex:1}
+
+/* ideas */
+.steps3{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.step-pill{border:0;background:#fff;border-radius:999px;padding:10px 18px;font-weight:900;cursor:pointer;box-shadow:inset 0 0 0 2px var(--line);display:flex;align-items:center;gap:8px;font-size:1.02rem}
+.step-pill span{width:26px;height:26px;border-radius:50%;background:#EDE9FE;display:grid;place-items:center;font-size:.85rem}
+.step-pill.on{background:var(--pc);color:#fff;box-shadow:0 4px 0 color-mix(in srgb,var(--pc) 70%,#000)}
+.step-pill.on span{background:rgba(255,255,255,.3)}
+.steps3 .arrow{color:#A78BFA;font-weight:900}
+.ideas-layout{display:grid;grid-template-columns:1fr 300px;gap:16px;align-items:start}
+.idea-input{display:flex;gap:10px;margin-top:12px}
+.idea-input input{font-size:1.15rem;padding:14px 16px;border-radius:18px}
+.side{display:flex;flex-direction:column;gap:14px}
+.side-card .sc-t{font-family:'Baloo 2';font-size:1.1rem;margin-bottom:6px}
+.join-card{text-align:center}
+.join-code{font-family:'Baloo 2';font-size:2.4rem;letter-spacing:.2em;color:var(--pri);line-height:1}
+.qr-small{display:flex;justify-content:center;margin:8px 0}
+.qr-small img,.qr-small canvas{border-radius:10px}
+.join-card .hint{word-break:break-all;font-size:.75rem}
+.timer{font-family:'Baloo 2';font-size:2.6rem;text-align:center;line-height:1}
+.timer.low{color:var(--bad);animation:pulse 1s infinite}
+.people{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;max-height:330px;overflow:auto}
+.people li{display:flex;align-items:center;gap:8px;font-weight:800;background:#F9FAFB;border-radius:12px;padding:6px 10px}
+.people .av{font-size:1.4rem}
+.people .xp{margin-left:auto;color:var(--pri);font-size:.85rem}
+.rank{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.rank li{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:12px;background:#F9FAFB;cursor:pointer;font-weight:700;font-size:.9rem;border:2px solid transparent}
+.rank li.sel{border-color:var(--pri);background:#F5F3FF}
+.rank .rt{flex:1}
+.rank .medal{width:26px;text-align:center}
+
+.mindmap{position:relative;height:560px;border-radius:26px;background:#fff;background-image:radial-gradient(circle at center,#F3F0FF 0,#fff 55%);box-shadow:var(--sh);overflow:hidden}
+.mindmap.small{height:440px}
+.mm-links{position:absolute;inset:0;pointer-events:none}
+.mm-links path{fill:none;stroke-width:3;stroke-linecap:round;opacity:.55}
+.mm-node{position:absolute;transform:translate(-50%,-50%);max-width:170px;padding:10px 12px;border-radius:18px;background:var(--nc);box-shadow:0 4px 12px rgba(30,27,75,.10);font-weight:800;font-size:.9rem;text-align:center;line-height:1.2;z-index:1;transition:transform .15s, box-shadow .15s}
+.mm-node.new{animation:pop .45s cubic-bezier(.3,1.6,.6,1) both}
+.mm-node.lvl0{background:linear-gradient(135deg,#6C4CF1,#A855F7);color:#fff;max-width:240px;padding:16px 20px;font-size:1.1rem;border-radius:28px;z-index:2;font-family:'Baloo 2'}
+.mm-node.lvl1.boxed{background:#fff;border:3px solid var(--nc);max-width:190px}
+.mm-node.lvl2{font-size:.78rem;max-width:150px;background:#fff;border:2px dashed var(--nc);font-weight:700}
+.mm-text{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.mm-meta{display:flex;justify-content:center;align-items:center;gap:6px;margin-top:6px;font-size:.85rem}
+.star-btn{border:0;background:#fff;border-radius:999px;padding:3px 10px;font-weight:900;cursor:pointer;box-shadow:0 2px 0 rgba(0,0,0,.12)}
+.star-btn:hover{transform:scale(1.1)}
+.node-x{position:absolute;top:-10px;right:-10px;width:24px;height:24px;font-size:.8rem;display:none;box-shadow:0 2px 6px rgba(0,0,0,.15);background:#fff}
+.mm-node:hover .node-x{display:grid}
+.mm-node.pickable{cursor:pointer}
+.mm-node.pickable:hover{transform:translate(-50%,-50%) scale(1.06);z-index:3}
+.mm-node.sel{outline:4px solid var(--pri);outline-offset:3px}
+.mm-node.sel::before{content:'🎯';position:absolute;top:-16px;left:-12px;font-size:1.4rem}
+.mm-node.dim{opacity:.45}
+.wall-wrap{position:absolute;inset:0;overflow:auto;padding:16px}
+.wall-center{display:flex;justify-content:center;margin-bottom:14px}
+.wall-center .mm-node{position:relative;transform:none;left:auto;top:auto}
+.wall{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.wall .mm-node{position:relative;transform:none;left:auto;top:auto}
+.wall .mm-node.pickable:hover{transform:scale(1.05)}
+.wall .mm-node.new{animation:popIn .35s both}
+
+/* objetivos */
+.obj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
+.card.obj{border-top:8px solid var(--oc)}
+.obj-top{display:flex;align-items:center;justify-content:space-between}
+.obj-num,.kr-num{font-family:'Baloo 2';font-size:1.15rem;color:var(--oc,var(--pri))}
+.big-text{font-size:1.15rem;font-weight:800}
+.toggle2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.toggle2>button,.radio-card span{border:0;background:#F9FAFB;border-radius:14px;padding:10px;cursor:pointer;font-weight:800;box-shadow:inset 0 0 0 2px var(--line);display:flex;flex-direction:column;align-items:center;text-align:center;gap:2px;width:100%}
+.toggle2>button small{font-weight:700;color:var(--muted);font-size:.75rem}
+.toggle2>button.on{background:#F5F3FF;box-shadow:inset 0 0 0 3px var(--pri)}
+.radio-card{display:block;cursor:pointer}
+.radio-card input{position:absolute;opacity:0;pointer-events:none}
+.radio-card input:checked+span{background:#F5F3FF;box-shadow:inset 0 0 0 3px var(--pri)}
+.radio-card span small{font-weight:700;color:var(--muted);font-size:.75rem}
+.checks{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:4px}
+.checks li{font-weight:700;color:var(--muted);font-size:.9rem}
+.checks li.ok{color:#047857}
+.stars{font-size:1.6rem;color:#F59E0B;letter-spacing:2px;margin-top:10px}
+.live{border-top:2px dashed var(--line);margin-top:14px;padding-top:6px}
+
+/* krs */
+.obj-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.tab{border:0;background:#fff;border-radius:14px;padding:10px 14px;font-weight:800;cursor:pointer;box-shadow:inset 0 0 0 2px var(--line);display:flex;align-items:center;gap:8px;max-width:360px;text-align:left}
+.tab.on{box-shadow:inset 0 0 0 3px var(--oc);background:color-mix(in srgb,var(--oc) 10%,#fff)}
+.tab .badge{background:var(--oc);color:#fff;border-radius:999px;padding:1px 8px;font-size:.8rem}
+.kr-layout{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+.kr-layout .mapcard{padding:0;position:sticky;top:80px}
+.kr-list{display:flex;flex-direction:column;gap:14px}
+.card.kr{border-left:8px solid var(--oc)}
+.units{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.unit{border:0;background:#F9FAFB;border-radius:14px;padding:8px;cursor:pointer;box-shadow:inset 0 0 0 2px var(--line);display:flex;flex-direction:column;align-items:center}
+.unit b{font-size:1.5rem;font-family:'Baloo 2';line-height:1}
+.unit small{font-weight:800;color:var(--muted)}
+.unit.on{background:#F5F3FF;box-shadow:inset 0 0 0 3px var(--pri)}
+.row3{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:end}
+.row3 input{font-size:1.2rem;font-weight:900;text-align:center}
+.arrowbig{font-size:1.8rem;color:#A78BFA;padding-bottom:6px}
+.sentence{background:#F5F3FF;border-radius:14px;padding:12px;font-weight:900;font-size:1.05rem;margin-top:6px}
+.thermo{display:flex;align-items:center;gap:8px;margin-top:10px;font-weight:800;font-size:.85rem}
+.thermo .tb{flex:1;height:14px;border-radius:14px;background:linear-gradient(90deg,#FDE68A,#34D399);position:relative}
+
+/* iniciativas */
+.ini-obj{margin-bottom:24px}
+.ini-obj h2{display:flex;gap:8px;align-items:center;margin-bottom:10px;border-left:8px solid var(--oc);padding-left:12px}
+.ini-krs{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:14px}
+.kr-sentence{font-weight:900;font-size:1.02rem;background:color-mix(in srgb,var(--oc) 10%,#fff);border-radius:12px;padding:10px 12px}
+.ini-list{list-style:none;padding:0;margin:10px 0;display:flex;flex-direction:column;gap:8px}
+.ini-list li{display:grid;grid-template-columns:auto 1fr 130px 140px auto;gap:6px;align-items:center}
+.ini-list input{padding:8px 10px}
+.parking{background:#FFFBEB;border:2px dashed #FCD34D;border-radius:14px;padding:10px;margin-bottom:12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-weight:800}
+.parking .chip{background:#fff;border-radius:12px;padding:6px 8px;display:flex;gap:6px;align-items:center;font-weight:700}
+.parking select{width:auto;padding:4px 8px}
+
+/* revision */
+.rev{display:grid;grid-template-columns:380px 1fr;gap:16px;align-items:start}
+.score{text-align:center}
+.score svg{display:block;margin:0 auto}
+.score .medal{font-size:1.4rem;font-weight:900;font-family:'Baloo 2'}
+.qlist{list-style:none;padding:0;margin:12px 0 0;display:flex;flex-direction:column;gap:8px;text-align:left}
+.qlist li{display:flex;gap:8px;align-items:flex-start;background:#F9FAFB;border-radius:12px;padding:8px 10px;font-weight:800;font-size:.9rem}
+.qlist li.bad{background:#FFFBEB}
+.qlist li .qt{flex:1}
+.qlist li small{display:block;font-weight:700;color:var(--muted)}
+.viewtabs{display:flex;gap:8px;margin-bottom:10px}
+
+/* poster */
+.poster{background:#fff;border-radius:26px;box-shadow:var(--sh);padding:22px;overflow:hidden}
+.poster-head{display:flex;gap:14px;align-items:center;padding:16px 18px;border-radius:20px;background:linear-gradient(120deg,#1E1B4B,#4C1D95);color:#fff;margin-bottom:16px}
+.poster-head .pe{font-size:2.6rem}
+.poster-head h2{font-size:1.7rem}
+.poster-objs{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.p-obj{border-radius:20px;background:color-mix(in srgb,var(--oc) 8%,#fff);border:3px solid var(--oc);padding:14px}
+.p-obj-h{font-family:'Baloo 2';font-size:1.2rem;display:flex;gap:8px;align-items:flex-start;line-height:1.15}
+.p-num{background:var(--oc);color:#fff;border-radius:50%;min-width:30px;height:30px;display:grid;place-items:center;font-size:1rem}
+.p-kr{background:#fff;border-radius:14px;padding:10px;margin-top:10px;box-shadow:0 2px 6px rgba(0,0,0,.05)}
+.p-kr-t{font-weight:900}
+.p-kr-o{color:var(--muted);font-weight:700;font-size:.85rem;margin-top:2px}
+.p-kr ul{margin:6px 0 0;padding-left:4px;list-style:none;font-size:.88rem;font-weight:700;color:#374151}
+
+/* celebracion */
+.celebrate{text-align:center}
+.trophy{font-size:6rem;animation:bounce 1.2s ease-in-out infinite}
+.wow{font-size:3.2rem;background:linear-gradient(90deg,#F59E0B,#EC4899,#6C4CF1);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:1.2rem;font-weight:700;color:#4B5563;max-width:720px;margin:8px auto 18px}
+.stat-tiles{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin:16px 0 26px}
+.stat{background:#fff;border-radius:18px;box-shadow:var(--sh);padding:14px}
+.stat .se{font-size:2rem}
+.stat .sn{font-family:'Baloo 2';font-size:2rem;line-height:1}
+.stat .sl{font-weight:800;color:var(--muted);font-size:.85rem}
+.podium{display:flex;justify-content:center;align-items:flex-end;gap:14px;margin:16px 0}
+.pod{display:flex;flex-direction:column;align-items:center;gap:4px;font-weight:900}
+.pod .pav{font-size:3rem}
+.pod .pbox{width:120px;border-radius:16px 16px 0 0;display:grid;place-items:center;color:#fff;font-family:'Baloo 2';font-size:2rem}
+.thanks{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:10px 0 26px}
+.thanks span{background:#fff;border-radius:999px;padding:6px 12px;font-weight:800;box-shadow:var(--sh)}
+.badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin:12px 0 26px}
+.bdg{background:#fff;border-radius:18px;padding:14px;box-shadow:var(--sh);text-align:center}
+.bdg .bi{font-size:2.4rem}
+.bdg .bn{font-weight:900}
+.bdg .bd{font-size:.78rem;color:var(--muted);font-weight:700}
+.bdg.off{opacity:.35;filter:grayscale(1)}
+.actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:22px 0}
+.sec-t{font-family:'Baloo 2';font-size:1.6rem;margin:10px 0}
+
+/* seguimiento */
+.track-top{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}
+.ring-card{display:flex;align-items:center;gap:14px}
+.ring-card .rt{font-family:'Baloo 2';font-size:1.2rem}
+.legend{display:flex;flex-direction:column;gap:6px;font-weight:800;font-size:.9rem}
+.legend span::before{content:'';display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:6px;background:var(--c);vertical-align:middle}
+.tobj{margin-bottom:22px}
+.tobj-h{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.tobj-h h2{flex:1;border-left:8px solid var(--oc);padding-left:12px}
+.tracks{display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:14px}
+.pbar{position:relative;height:22px;border-radius:22px;background:#F3F4F6;margin:12px 0 6px;overflow:visible}
+.pbar .fill{height:100%;border-radius:22px;transition:width .8s}
+.pbar .marker{position:absolute;top:-6px;bottom:-6px;width:4px;border-radius:4px;background:#1E1B4B;opacity:.35}
+.pbar .ptxt{position:absolute;right:8px;top:0;bottom:0;display:flex;align-items:center;font-weight:900;font-size:.8rem}
+.track-nums{display:flex;flex-wrap:wrap;gap:10px;font-weight:700;font-size:.88rem;color:#374151;align-items:center}
+.checkin{display:grid;grid-template-columns:130px auto 1fr auto;gap:8px;align-items:center;margin-top:10px}
+.conf{display:flex;gap:2px}
+.conf label{cursor:pointer}
+.conf input{position:absolute;opacity:0}
+.conf span{font-size:1.5rem;padding:2px 4px;border-radius:10px;opacity:.4;display:block}
+.conf input:checked+span{opacity:1;background:#F5F3FF;box-shadow:inset 0 0 0 2px var(--pri)}
+.ini-check{display:flex;flex-direction:column;gap:4px;margin-top:10px;font-weight:700;font-size:.9rem}
+.ini-check label{display:flex;gap:8px;align-items:center;cursor:pointer}
+.ini-check input{width:auto}
+.ini-check .done{text-decoration:line-through;color:var(--muted)}
+
+/* participante */
+.pv{max-width:560px;margin:0 auto;padding:14px 14px 40px}
+.pv-head{display:flex;gap:12px;align-items:center;background:#fff;border-radius:20px;padding:12px;box-shadow:var(--sh)}
+.pv-av{font-size:2.6rem}
+.pv-xp{margin-left:auto;font-family:'Baloo 2';font-size:1.3rem;color:var(--pri)}
+.pv-phase{margin:14px 0;text-align:center;font-weight:800;background:#fff;border-radius:16px;padding:10px;box-shadow:var(--sh)}
+.pv-form{display:flex;flex-direction:column;gap:10px}
+.pv-form textarea{font-size:1.15rem}
+.pv-ideas{list-style:none;padding:0;margin:14px 0 0;display:flex;flex-direction:column;gap:10px}
+.pv-ideas li{background:var(--nc);border-radius:16px;padding:12px;display:flex;gap:10px;align-items:center;font-weight:800;animation:popIn .3s both}
+.pv-ideas li .t{flex:1}
+.pv-ideas .mine{font-size:.7rem;background:#fff;border-radius:999px;padding:2px 8px}
+.vote-btn{border:0;border-radius:14px;padding:10px 12px;font-size:1.3rem;cursor:pointer;background:#fff;box-shadow:0 3px 0 rgba(0,0,0,.12);min-width:64px;font-weight:900}
+.vote-btn.on{background:#FDE68A}
+.avatars{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.avatars label{cursor:pointer}
+.avatars input{position:absolute;opacity:0}
+.avatars span{display:grid;place-items:center;font-size:2rem;border-radius:14px;background:#F9FAFB;padding:6px;box-shadow:inset 0 0 0 2px var(--line)}
+.avatars input:checked+span{background:#F5F3FF;box-shadow:inset 0 0 0 3px var(--pri);transform:scale(1.08)}
+.watch{text-align:center;padding:30px 16px}
+.watch .we{font-size:4rem;animation:float 3s ease-in-out infinite}
+
+/* modal / toasts / pops */
+#modal{position:fixed;inset:0;background:rgba(30,27,75,.45);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}
+#modal.on{display:flex}
+.modal-box{background:#fff;border-radius:24px;max-width:620px;width:100%;max-height:92vh;overflow:auto;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,.25);animation:popIn .25s both}
+.modal-box h2{margin-bottom:8px}
+.modal-form{display:flex;flex-direction:column;gap:8px}
+.modal-form>label{font-weight:800;display:flex;flex-direction:column;gap:6px}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:14px;flex-wrap:wrap}
+.period-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.period-preview{background:#F5F3FF;border-radius:14px;padding:10px 12px;font-weight:800}
+#toasts{position:fixed;right:16px;bottom:86px;display:flex;flex-direction:column;gap:8px;z-index:60;align-items:flex-end;pointer-events:none}
+.toast{background:#1E1B4B;color:#fff;border-radius:16px;padding:12px 16px;font-weight:800;box-shadow:0 10px 30px rgba(0,0,0,.2);animation:slideIn .3s both;max-width:360px}
+.toast.xp{background:linear-gradient(90deg,#F59E0B,#EC4899)}
+.toast.warn{background:#B45309}
+.toast.err{background:#B91C1C}
+.toast.ok{background:#047857}
+#pop{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:70;pointer-events:none}
+#pop.on{display:flex}
+.badge-pop{background:#fff;border-radius:28px;padding:26px 36px;text-align:center;box-shadow:0 30px 80px rgba(76,52,200,.35);animation:popBig .5s cubic-bezier(.3,1.6,.6,1) both}
+.bp-ic{font-size:5rem;animation:bounce 1s ease-in-out infinite}
+.bp-t{font-weight:900;color:var(--pri);text-transform:uppercase;letter-spacing:.1em;font-size:.85rem}
+.bp-n{font-family:'Baloo 2';font-size:2rem}
+.bp-d{color:var(--muted);font-weight:700}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:80}
+
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--sc,#6C4CF1) 35%,transparent)}50%{box-shadow:0 0 0 10px transparent}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes bounce{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-12px) rotate(3deg)}}
+@keyframes pop{from{transform:translate(-50%,-50%) scale(.2);opacity:0}to{transform:translate(-50%,-50%) scale(1);opacity:1}}
+@keyframes popIn{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes popBig{from{transform:scale(.3) rotate(-8deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+@keyframes slideIn{from{transform:translateX(40px);opacity:0}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+@media (max-width:1000px){
+  .ideas-layout,.kr-layout,.rev{grid-template-columns:1fr}
+  .kr-layout .mapcard{position:static}
+  .stat-tiles{grid-template-columns:repeat(3,1fr)}
+  .tiles{grid-template-columns:repeat(2,1fr)}
+  .track-top{grid-template-columns:1fr}
+  .hud .xpbar{display:none}
+}
+@media (max-width:700px){
+  .choice,.how,.grid2{grid-template-columns:1fr}
+  .hero h1{font-size:2.2rem}
+  .phase-head h1{font-size:1.6rem}
+  .topbar{flex-wrap:wrap}
+  .hud{margin-left:0}
+  .ini-krs,.tracks,.obj-grid{grid-template-columns:1fr}
+  .ini-list li{grid-template-columns:auto 1fr auto;}
+  .ini-list li .sm{grid-column:2/3}
+  .checkin{grid-template-columns:1fr 1fr}
+  .period-grid{grid-template-columns:repeat(2,1fr)}
+  .stat-tiles{grid-template-columns:repeat(2,1fr)}
+  .mindmap{height:480px}
+}
+.btn.danger{background:var(--bad);color:#fff;box-shadow:0 4px 0 #991B1B}
+.btn.danger-ghost{color:#B91C1C}
+.report-head{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.rtiles{grid-template-columns:repeat(5,1fr)}
+.rtable{width:100%;border-collapse:collapse;font-size:.9rem}
+.rtable th{background:#F5F3FF;text-align:left;padding:10px;font-weight:900;white-space:nowrap;position:sticky;top:0}
+.rtable td{padding:10px;border-top:1px solid var(--line);vertical-align:top}
+.rtable td.n{text-align:center;font-weight:800;white-space:nowrap}
+.rtable tbody tr:hover{background:#FAFAFF}
+.rdetail{margin-top:26px;break-inside:avoid}
+@media (max-width:1000px){.rtiles{grid-template-columns:repeat(2,1fr)}}
+@media print{
+  .rdetail{break-before:page}
+  .rtable th{position:static}
+  body{background:#fff}
+  .topbar,.journey,.bottom-nav,.coach,.actions,.ro-banner,#toasts,.phase-head,.no-print{display:none!important}
+  .card,.stat,.bdg,.poster{box-shadow:none}
+  .phase{padding:0}
+  .trophy{animation:none}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="modal"><div class="modal-box" id="modalBox"></div></div>
+<div id="toasts"></div>
+<div id="pop"></div>
+<canvas id="confetti"></canvas>
+
+<script>
+/* =====================================================================
+   La app detecta sola si está en Netlify (con la función /api).
+   Si la abres sin servidor (doble clic al archivo), funciona en MODO DEMO
+   guardando todo solo en este navegador.
+   ===================================================================== */
+let DEMO = true;          // se decide al arrancar
+let API_CONFIGURED = true; // false = faltan variables de entorno en Netlify
+
+/* ---------------- utilidades ---------------- */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid = () => (crypto.randomUUID ? crypto.randomUUID() : 'id' + Math.random().toString(36).slice(2) + Date.now().toString(36));
+const iso = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+const todayISO = () => iso(new Date());
+const parseISO = s => { const [y,m,d] = String(s).slice(0,10).split('-').map(Number); return new Date(y, m-1, d); };
+const addDays = (s, n) => { const d = parseISO(s); d.setDate(d.getDate()+n); return iso(d); };
+const addMonths = (s, n) => { const d = parseISO(s); d.setMonth(d.getMonth()+n); return iso(d); };
+const daysBetween = (a, b) => Math.round((parseISO(b) - parseISO(a)) / 86400000);
+const fmtDate = s => s ? parseISO(s).toLocaleDateString('es-MX', {day:'numeric', month:'short', year:'numeric'}) : '—';
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const short = (s, n) => { s = String(s || ''); return s.length > n ? s.slice(0, n-1) + '…' : s; };
+const norm = s => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+const isNum = v => v !== '' && v !== null && v !== undefined && !isNaN(Number(v));
+function fmtVal(v, unit){
+  if (!isNum(v)) return '—';
+  const n = Number(v);
+  const s = n.toLocaleString('es-MX', {maximumFractionDigits: 2});
+  if (unit === '$') return '$' + s;
+  if (unit === '%') return s + '%';
+  return s;
+}
+function newCode(existing = []){
+  const A = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let c;
+  do { c = Array.from({length:5}, () => A[Math.floor(Math.random()*A.length)]).join(''); } while (existing.includes(c));
+  return c;
+}
+function hashIdx(str, n){ let h = 0; for (const ch of String(str)) h = (h*31 + ch.charCodeAt(0)) >>> 0; return h % n; }
+
+/* ---------------- constantes ---------------- */
+const PHASES = [
+  {key:'contexto',    icon:'🧭', name:'¿Dónde estamos hoy?',          short:'Contexto',        color:'#3B82F6', desc:'Miramos nuestra realidad antes de decidir a dónde ir.',
+   tip:'Antes de decidir a dónde ir, miremos dónde estamos. Escriban lo que les <b>duele hoy</b> y las <b>oportunidades</b> que ven. ¡Cada notita cuenta!'},
+  {key:'ideas',       icon:'💡', name:'Lluvia de ideas',               short:'Ideas',           color:'#F59E0B', desc:'¿Qué queremos lograr? Todas las ideas valen.',
+   tip:'¡Hora de soñar! Escriban ideas de lo que quieren <b>lograr</b>. No hay ideas malas. Después cada quien vota con <b>5 estrellas ⭐</b> y eligen las 3 mejores.'},
+  {key:'objetivos',   icon:'🎯', name:'Nuestros objetivos',            short:'Objetivos',       color:'#F43F5E', desc:'Convertimos las mejores ideas en destinos claros.',
+   tip:'Un objetivo es como el <b>destino de un viaje</b>: dice A DÓNDE vamos, sin números, y debe emocionar al equipo. ¡Con 3 es suficiente!'},
+  {key:'krs',         icon:'📏', name:'¿Cómo sabremos que llegamos?',  short:'Resultados clave',color:'#8B5CF6', desc:'A cada objetivo le ponemos números: dónde estamos y a dónde vamos.',
+   tip:'Un resultado clave <b>siempre tiene un número</b>: cuánto tenemos hoy y a cuánto queremos llegar. Si suena a tarea ("hacer", "lanzar"), ¡no es resultado clave!'},
+  {key:'iniciativas', icon:'🛠️', name:'¿Qué vamos a hacer?',           short:'Acciones',        color:'#10B981', desc:'Las acciones que moverán cada número.',
+   tip:'Ahora sí: ¿qué vamos a <b>HACER</b> para mover cada número? Cada acción necesita un <b>responsable</b> y una <b>fecha</b>.'},
+  {key:'revision',    icon:'🔍', name:'Revisión',                       short:'Revisión',        color:'#06B6D4', desc:'Okri revisa que sus OKRs estén bien hechos.',
+   tip:'Yo califico sus OKRs. Si algo sale en amarillo, denle clic a <b>"Arreglar"</b> y los llevo directo. ¡Busquen la medalla de diamante 💎!'},
+  {key:'celebracion', icon:'🏆', name:'¡Lo logramos!',                  short:'Celebrar',        color:'#EAB308', desc:'Su mapa de OKRs está listo.',
+   tip:'¡Felicidades! Ahora todos saben <b>a dónde vamos</b> y <b>cómo sabremos que llegamos</b>. Impriman su mapa y pónganlo donde todos lo vean.'},
+  {key:'seguimiento', icon:'📈', name:'Seguimiento',                    short:'Seguimiento',     color:'#6366F1', desc:'Actualizamos los números para ver si vamos en camino.',
+   tip:'Cada semana actualicen los números. La <b>rayita gris</b> muestra dónde deberíamos ir según el tiempo. ¡A mantener el verde! 🟢'}
+];
+const LEVELS = [
+  {xp:0,   n:'Exploradores', e:'🧭'},
+  {xp:120, n:'Navegantes',   e:'⛵'},
+  {xp:300, n:'Estrategas',   e:'♟️'},
+  {xp:520, n:'Campeones',    e:'🏅'},
+  {xp:800, n:'Maestros OKR', e:'👑'}
+];
+const BADGES = {
+  primera_idea:{icon:'🌱', name:'Primera chispa',     desc:'Escribieron la primera idea'},
+  diez_ideas:  {icon:'🌧️', name:'Tormenta de ideas',  desc:'10 ideas o más'},
+  primer_obj:  {icon:'🎯', name:'Tenemos destino',    desc:'Primer objetivo escrito'},
+  primer_kr:   {icon:'📏', name:'Medidores',          desc:'Primer resultado clave completo'},
+  kr_completos:{icon:'🧮', name:'Todo medible',       desc:'Cada objetivo con 2+ resultados clave'},
+  iniciativas: {icon:'🛠️', name:'Manos a la obra',    desc:'Cada resultado clave tiene acciones'},
+  calidad:     {icon:'💎', name:'OKRs de diamante',   desc:'Calificación de 80 o más'},
+  celebracion: {icon:'🏆', name:'Misión cumplida',    desc:'Terminaron el taller'},
+  checkin:     {icon:'📈', name:'Seguimos el rumbo',  desc:'Primer check-in registrado'},
+  kr_logrado:  {icon:'🥇', name:'Meta alcanzada',     desc:'Un resultado clave al 100%'}
+};
+const AVATARS = ['🦊','🐼','🦁','🐯','🐸','🐙','🦉','🐨','🐵','🦄','🐝','🐬','🐧','🐢','🦋','🐶','🐱','🐻'];
+const IDEA_COLORS = ['#FDE68A','#BFDBFE','#FBCFE8','#BBF7D0','#DDD6FE','#FED7AA','#A5F3FC','#FECACA'];
+const OBJ_COLORS = ['#F43F5E','#8B5CF6','#0EA5E9','#10B981','#F59E0B'];
+const UNITS = [{k:'#', l:'Cantidad'}, {k:'$', l:'Dinero'}, {k:'%', l:'Porcentaje'}];
+const PERIODS = [
+  {k:'mes',       m:1,  e:'📅', n:'Mes',       note:'Pruebas rápidas'},
+  {k:'trimestre', m:3,  e:'🗓️', n:'Trimestre', note:'Ideal para áreas ⭐'},
+  {k:'semestre',  m:6,  e:'📆', n:'Semestre',  note:'Proyectos medianos'},
+  {k:'anio',      m:12, e:'🌎', n:'Año',       note:'Ideal para la empresa ⭐'}
+];
+const TASK_VERBS = ['lanzar','hacer','implementar','crear','capacitar','realizar','desarrollar','disenar','abrir','instalar','comprar','contratar','organizar','enviar','publicar','terminar','iniciar','ejecutar','elaborar','construir','programar','definir','revisar','actualizar','preparar','entregar','llevar','poner','montar','migrar','integrar','documentar','planear','planificar','visitar','llamar','hablar','reunir','junta','reunion','capacitacion','lanzamiento','implementacion','campana','proyecto','taller','curso','entrenar'];
+const OWL_NAME = 'Okri';
+
+/* ---------------- estado ---------------- */
+const S = {
+  user:null, view:'landing', clients:[], counts:{}, admins:{}, client:null, workshops:[],
+  ws:null, active:true, ideas:[], people:[], seen:new Set(), sig:'', krTab:null, revTab:'poster',
+  timerEnd:null, signup:false, joinCode:'', part:null, pPub:null, pIdeas:[], pPeople:[], pVotes:[], pXp:0
+};
+let pollT = null, partT = null, saveT = null, tickT = null;
+
+/* =====================================================================
+   CAPA DE DATOS — MODO DEMO (localStorage)
+   ===================================================================== */
+const LS_KEY = 'okr_taller_demo_v1';
+let MEM = null;
+function seedDemo(){
+  const t = todayISO();
+  return {
+    clients:[
+      {id:'c-demo', name:'Empresa Demo', contact:'Contacto Demo', valid_from:addDays(t,-30), valid_to:addDays(t,90), status:'activo'},
+      {id:'c-venc', name:'Cliente Vencido S.A.', contact:'', valid_from:addDays(t,-200), valid_to:addDays(t,-5), status:'activo'}
+    ],
+    users:[
+      {email:'super@demo.com', pass:'demo', role:'superadmin'},
+      {email:'admin@demo.com', pass:'demo', role:'client_admin', client_id:'c-demo'},
+      {email:'vencido@demo.com', pass:'demo', role:'client_admin', client_id:'c-venc'}
+    ],
+    workshops:[], ideas:[], participants:[], votes:[]
+  };
+}
+function dLoad(){
+  try { const raw = localStorage.getItem(LS_KEY); if (raw) { MEM = JSON.parse(raw); return MEM; } } catch(e){}
+  if (!MEM) { MEM = seedDemo(); dSave(MEM); }
+  return MEM;
+}
+function dSave(db){ MEM = db; try { localStorage.setItem(LS_KEY, JSON.stringify(db)); } catch(e){} }
+function dWs(db, code){ return db.workshops.find(w => w.code.toUpperCase() === String(code||'').trim().toUpperCase()); }
+const lsGet = k => { try { return localStorage.getItem(k); } catch(e){ return null; } };
+const lsSet = (k, v) => { try { localStorage.setItem(k, v); } catch(e){} };
+const lsDel = k => { try { localStorage.removeItem(k); } catch(e){} };
+
+const DemoStore = {
+  async signIn(email, pass){
+    const u = dLoad().users.find(u => u.email.toLowerCase() === email.trim().toLowerCase() && u.pass === pass);
+    if (!u) throw new Error('Correo o contraseña incorrectos');
+    lsSet('okr_sess', u.email);
+    return {email:u.email, role:u.role, client_id:u.client_id || null};
+  },
+  async current(){
+    const e = lsGet('okr_sess'); if (!e) return null;
+    const u = dLoad().users.find(u => u.email === e);
+    return u ? {email:u.email, role:u.role, client_id:u.client_id || null} : null;
+  },
+  async signOut(){ lsDel('okr_sess'); },
+  async listClients(){ return [...dLoad().clients].sort((a,b) => a.name.localeCompare(b.name)); },
+  async getClient(id){ return dLoad().clients.find(c => c.id === id) || null; },
+  async saveClient(c){
+    const db = dLoad();
+    if (!c.id) { c.id = uid(); db.clients.push(c); }
+    else { const i = db.clients.findIndex(x => x.id === c.id); db.clients[i] = {...db.clients[i], ...c}; }
+    dSave(db); return c;
+  },
+  async setUser(email, password, clientId){
+    const db = dLoad(); email = email.trim().toLowerCase();
+    if (String(password || '').length < 6) throw new Error('La contraseña debe tener al menos 6 caracteres');
+    let u = db.users.find(u => u.email.toLowerCase() === email);
+    if (u && u.role === 'superadmin') throw new Error('Ese correo es el del super administrador');
+    if (!u) { db.users.push({email, pass:password, role:'client_admin', client_id:clientId}); dSave(db); return 'Usuario creado ✅'; }
+    u.pass = password; u.role = 'client_admin'; u.client_id = clientId; dSave(db); return 'Contraseña actualizada y usuario asignado ✅';
+  },
+  async deleteUser(email){ const db = dLoad(); db.users = db.users.filter(u => u.email !== email || u.role === 'superadmin'); dSave(db); },
+  async live(code, pid){
+    const pub = await this.wsPublic(code);
+    if (!pub) return {pub:null, ideas:[], people:[], myVotes:[]};
+    return {pub, ideas:await this.listIdeas(code, pid), people:await this.listPeople(code, pid), myVotes:pid ? await this.myVotes(pid) : []};
+  },
+  async adminsMap(){
+    const m = {}; dLoad().users.filter(u => u.client_id).forEach(u => (m[u.client_id] = m[u.client_id] || []).push(u.email)); return m;
+  },
+  async workshopCounts(){ const m = {}; dLoad().workshops.forEach(w => m[w.client_id] = (m[w.client_id]||0)+1); return m; },
+  async listWorkshops(cid){ return dLoad().workshops.filter(w => w.client_id === cid).sort((a,b) => (b.updated_at||'').localeCompare(a.updated_at||'')); },
+  async getWorkshop(id){ const w = dLoad().workshops.find(w => w.id === id); if (!w) throw new Error('Taller no encontrado'); return JSON.parse(JSON.stringify(w)); },
+  async createWorkshop(w){
+    const db = dLoad(); w.id = uid(); w.code = newCode(db.workshops.map(x => x.code));
+    w.created_at = w.updated_at = new Date().toISOString(); db.workshops.push(w); dSave(db); return w;
+  },
+  async saveWorkshop(w){
+    const db = dLoad(); const i = db.workshops.findIndex(x => x.id === w.id);
+    w.updated_at = new Date().toISOString();
+    if (i >= 0) db.workshops[i] = JSON.parse(JSON.stringify(w));
+    dSave(db);
+  },
+  async deleteClient(id){
+    const db = dLoad();
+    const wsIds = db.workshops.filter(w => w.client_id === id).map(w => w.id);
+    const ideaIds = db.ideas.filter(i => wsIds.includes(i.workshop_id)).map(i => i.id);
+    db.clients = db.clients.filter(c => c.id !== id);
+    db.workshops = db.workshops.filter(w => w.client_id !== id);
+    db.ideas = db.ideas.filter(i => !wsIds.includes(i.workshop_id));
+    db.participants = db.participants.filter(p => !wsIds.includes(p.workshop_id));
+    db.votes = db.votes.filter(v => !ideaIds.includes(v.idea_id));
+    db.users = db.users.filter(u => u.client_id !== id);
+    dSave(db);
+  },
+  async workshopStats(cid){
+    const db = dLoad(), m = {};
+    db.workshops.filter(w => w.client_id === cid).forEach(w => { m[w.id] = {ideas:db.ideas.filter(i => i.workshop_id === w.id).length, participants:db.participants.filter(p => p.workshop_id === w.id).length}; });
+    return m;
+  },
+  async deleteWorkshop(id){
+    const db = dLoad(); db.workshops = db.workshops.filter(w => w.id !== id);
+    db.ideas = db.ideas.filter(i => i.workshop_id !== id); db.participants = db.participants.filter(p => p.workshop_id !== id); dSave(db);
+  },
+  async wsPublic(code){
+    const db = dLoad(); const w = dWs(db, code); if (!w) return null;
+    const c = db.clients.find(c => c.id === w.client_id);
+    return {id:w.id, name:w.name, area:w.area, period_label:w.period_label, phase:w.phase, idea_step:(w.data && w.data.ideaStep) || 'proponer', active:isActive(c)};
+  },
+  async join(code, name, avatar){
+    const pub = await this.wsPublic(code);
+    if (!pub) throw new Error('No encontramos ese código 🤔');
+    if (!pub.active) throw new Error('La licencia de este taller no está vigente');
+    const db = dLoad(); const p = {id:uid(), workshop_id:pub.id, name, avatar, xp:0};
+    db.participants.push(p); dSave(db);
+    return {participant:p, workshop:pub};
+  },
+  async listIdeas(code, pid){
+    const db = dLoad(); const w = dWs(db, code); if (!w) return [];
+    return db.ideas.filter(i => i.workshop_id === w.id).sort((a,b) => a.created_at.localeCompare(b.created_at))
+      .map(i => ({id:i.id, author:i.author, avatar:i.avatar, text:i.text, votes:i.votes, created_at:i.created_at, mine:!!pid && i.participant_id === pid}));
+  },
+  async addIdea(code, pid, author, avatar, text){
+    const db = dLoad(); const w = dWs(db, code); if (!w) throw new Error('Código no encontrado');
+    if (!isActive(db.clients.find(c => c.id === w.client_id))) throw new Error('La licencia no está vigente');
+    const idea = {id:uid(), workshop_id:w.id, participant_id:pid, author, avatar, text:text.slice(0,200), votes:0, created_at:new Date().toISOString()};
+    db.ideas.push(idea);
+    if (pid) { const p = db.participants.find(p => p.id === pid); if (p) p.xp += 10; }
+    dSave(db); return idea;
+  },
+  async voteIdea(code, pid, ideaId){
+    const db = dLoad(); const idea = db.ideas.find(i => i.id === ideaId); if (!idea) throw new Error('Idea no encontrada');
+    if (!pid) { idea.votes++; dSave(db); return {ok:true, votes:idea.votes}; }
+    const p = db.participants.find(p => p.id === pid);
+    const had = db.votes.find(v => v.participant_id === pid && v.idea_id === ideaId);
+    if (had) {
+      db.votes = db.votes.filter(v => v !== had); idea.votes = Math.max(0, idea.votes-1); if (p) p.xp = Math.max(0, p.xp-2);
+      dSave(db); return {ok:true, voted:false, votes:idea.votes, remaining:5 - db.votes.filter(v => v.participant_id === pid).length};
+    }
+    const used = db.votes.filter(v => v.participant_id === pid).length;
+    if (used >= 5) return {ok:false, msg:'Ya usaste tus 5 estrellas. Quita una para mover tu voto.', remaining:0};
+    db.votes.push({participant_id:pid, idea_id:ideaId}); idea.votes++; if (p) p.xp += 2;
+    dSave(db); return {ok:true, voted:true, votes:idea.votes, remaining:4 - used};
+  },
+  async myVotes(pid){ return dLoad().votes.filter(v => v.participant_id === pid).map(v => v.idea_id); },
+  async deleteIdea(id){ const db = dLoad(); db.ideas = db.ideas.filter(i => i.id !== id); db.votes = db.votes.filter(v => v.idea_id !== id); dSave(db); },
+  async listPeople(code, pid){
+    const db = dLoad(); const w = dWs(db, code); if (!w) return [];
+    return db.participants.filter(p => p.workshop_id === w.id).map(p => ({name:p.name, avatar:p.avatar, xp:p.xp, me:!!pid && p.id === pid}));
+  }
+};
+
+/* =====================================================================
+   CAPA DE DATOS — SERVIDOR NETLIFY (función /api + Netlify Blobs)
+   ===================================================================== */
+let TOKEN = null;
+try { TOKEN = localStorage.getItem('okr_token'); } catch(e) {}
+async function api(action, payload = {}){
+  let r, j;
+  try {
+    r = await fetch('/api', {method:'POST', headers:Object.assign({'content-type':'application/json'}, TOKEN ? {authorization:'Bearer ' + TOKEN} : {}), body:JSON.stringify(Object.assign({action}, payload))});
+    j = await r.json();
+  } catch(e) { throw new Error('Sin conexión con el servidor. Revisa tu internet.'); }
+  if (!r.ok || j.error) {
+    if (r.status === 401 && action !== 'login') { TOKEN = null; lsDel('okr_token'); }
+    throw new Error(j.error || 'Error del servidor');
+  }
+  return j.data;
+}
+const ApiStore = {
+  async signIn(email, pass){ const r = await api('login', {email, pass}); TOKEN = r.token; lsSet('okr_token', TOKEN); return r.user; },
+  async current(){ if (!TOKEN) return null; try { return await api('me'); } catch(e) { return null; } },
+  async signOut(){ TOKEN = null; lsDel('okr_token'); },
+  listClients: () => api('listClients'),
+  getClient: id => api('getClient', {id}),
+  saveClient: c => api('saveClient', {client:c}),
+  deleteClient: id => api('deleteClient', {id}),
+  setUser: (email, password, client_id) => api('setUser', {email, password, client_id}),
+  deleteUser: email => api('deleteUser', {email}),
+  adminsMap: () => api('adminsMap'),
+  workshopCounts: () => api('workshopCounts'),
+  listWorkshops: cid => api('listWorkshops', {client_id:cid}),
+  getWorkshop: id => api('getWorkshop', {id}),
+  createWorkshop: w => api('createWorkshop', {ws:w}),
+  saveWorkshop: w => api('saveWorkshop', {ws:{id:w.id, name:w.name, phase:w.phase, data:w.data}}),
+  deleteWorkshop: id => api('deleteWorkshop', {id}),
+  workshopStats: cid => api('workshopStats', {client_id:cid}),
+  wsPublic: code => api('wsPublic', {code}),
+  join: (code, name, avatar) => api('join', {code, name, avatar}),
+  live: (code, pid) => api('live', {code, pid:pid || null}),
+  addIdea: (code, pid, author, avatar, text) => api('addIdea', {code, pid:pid || null, author, avatar, text}),
+  voteIdea: (code, pid, idea_id) => api('voteIdea', {code, pid:pid || null, idea_id}),
+  deleteIdea: (id, code) => api('deleteIdea', {id, code})
+};
+let Store = DemoStore;
+
+/* ---------------- reglas de negocio ---------------- */
+function isActive(c){ if (!c || c.status !== 'activo') return false; const t = todayISO(); return t >= String(c.valid_from).slice(0,10) && t <= String(c.valid_to).slice(0,10); }
+function clientStatus(c){
+  const t = todayISO();
+  if (c.status !== 'activo') return {k:'susp', label:'⏸️ Suspendido', color:'#6B7280'};
+  if (t < c.valid_from) return {k:'pend', label:'⏳ Inicia ' + fmtDate(c.valid_from), color:'#3B82F6'};
+  if (t > c.valid_to) return {k:'venc', label:'⛔ Vencido', color:'#EF4444'};
+  const d = daysBetween(t, c.valid_to);
+  if (d <= 15) return {k:'pronto', label:`⚠️ Vence en ${d} día${d===1?'':'s'}`, color:'#F59E0B', days:d};
+  return {k:'ok', label:`✅ Activo · ${d} días`, color:'#10B981', days:d};
+}
+function newWorkshopData(){
+  return {context:{mision:'', vision:'', dolores:[], oportunidades:[]}, ideaStep:'proponer', selected:[], objectives:[], xp:0, awarded:{}, badges:[], maxPhase:0};
+}
+function ensureData(w){
+  const base = newWorkshopData(); w.data = Object.assign(base, w.data || {});
+  w.data.context = Object.assign(newWorkshopData().context, w.data.context || {});
+  w.data.objectives.forEach(o => { o.krs = o.krs || []; o.parking = o.parking || []; o.krs.forEach(k => { k.initiatives = k.initiatives || []; k.checkins = k.checkins || []; }); });
+  w.phase = w.phase || 0;
+  return w;
+}
+const RO = () => S.view === 'ws' && !S.active;
+function blocked(){ if (RO()) { toast('🔒 La licencia terminó: solo lectura', 'warn'); return true; } return false; }
+const validObjs = () => S.ws.data.objectives.filter(o => (o.text || '').trim());
+function krComplete(k){ return !!((k.metric||'').trim() && k.unit && isNum(k.base) && isNum(k.target) && Number(k.base) !== Number(k.target) && !isTaskLike(k.metric)); }
+function isTaskLike(t){ const w = norm(t).trim().split(/\s+/)[0] || ''; return TASK_VERBS.includes(w); }
+function startsWithVerb(t){ const w = norm(t).trim().split(/\s+/)[0] || ''; return /^(ser|ir|[a-zñ]{2,}(ar|er|ir))(nos|se|lo|la)?$/.test(w); }
+function krSentence(k){
+  if (!(k.metric||'').trim()) return '';
+  if (!isNum(k.base) || !isNum(k.target)) return k.metric;
+  const up = Number(k.target) >= Number(k.base);
+  return `${up ? '⬆️ Subir' : '⬇️ Bajar'} ${k.metric} de ${fmtVal(k.base, k.unit)} a ${fmtVal(k.target, k.unit)}`;
+}
+function krCurrent(k){ return isNum(k.current) ? Number(k.current) : Number(k.base); }
+function krProgress(k){
+  if (!krComplete(k)) return 0;
+  const b = Number(k.base), t = Number(k.target);
+  return clamp((krCurrent(k) - b) / (t - b), 0, 1);
+}
+function elapsed(){
+  const w = S.ws; if (!w.period_start || !w.period_end) return 0;
+  return clamp(daysBetween(w.period_start, todayISO()) / Math.max(1, daysBetween(w.period_start, w.period_end)), 0, 1);
+}
+function krStatus(k){
+  const p = krProgress(k), e = elapsed();
+  if (p >= 1) return {c:'#EAB308', t:'🥇 ¡Logrado!'};
+  if (p >= e - 0.10) return {c:'#10B981', t:'🟢 En camino'};
+  if (p >= e - 0.25) return {c:'#F59E0B', t:'🟡 Atención'};
+  return {c:'#EF4444', t:'🔴 En riesgo'};
+}
+function allKRs(){ return validObjs().flatMap(o => o.krs); }
+function allInis(){ return allKRs().flatMap(k => k.initiatives); }
+function qualityItems(){
+  const objs = validObjs(), krs = allKRs(), inis = allInis();
+  return [
+    {ok: objs.length >= 1 && objs.length <= 3, t:'Tienen de 1 a 3 objetivos', w:'Menos es más: así el equipo se enfoca.', ph:2},
+    {ok: objs.length > 0 && objs.every(o => !/\d/.test(o.text)), t:'Los objetivos no tienen números', w:'El objetivo inspira; los números van en los resultados clave.', ph:2},
+    {ok: objs.length > 0 && objs.every(o => (o.why||'').trim().length > 3), t:'Cada objetivo dice por qué importa', w:'Si sabemos el porqué, todos empujan.', ph:2},
+    {ok: objs.length > 0 && objs.every(o => { const n = o.krs.filter(krComplete).length; return n >= 2 && n <= 4; }), t:'Cada objetivo tiene de 2 a 4 resultados clave', w:'Uno solo se queda corto; más de 4 distrae.', ph:3},
+    {ok: krs.length > 0 && krs.every(krComplete), t:'Todos los resultados clave tienen "hoy" y "meta"', w:'Sin punto de partida no sabemos si avanzamos.', ph:3},
+    {ok: krs.length > 0 && !krs.some(k => isTaskLike(k.metric)), t:'Ningún resultado clave parece tarea', w:'Las tareas van en "¿Qué vamos a hacer?".', ph:3},
+    {ok: krs.length > 0 && krs.every(k => (k.owner||'').trim()), t:'Cada resultado clave tiene un dueño', w:'Lo que es de todos no es de nadie.', ph:3},
+    {ok: krs.length > 0 && krs.every(k => k.initiatives.length > 0), t:'Cada resultado clave tiene al menos una acción', w:'Los números no se mueven solos.', ph:4},
+    {ok: inis.length > 0 && inis.every(n => (n.owner||'').trim() && n.due), t:'Las acciones tienen responsable y fecha', w:'Quién y cuándo: así sí pasa.', ph:4}
+  ];
+}
+function qualityScore(){ const it = qualityItems(); return Math.round(100 * it.filter(i => i.ok).length / it.length); }
+function levelOf(xp){ let i = 0; LEVELS.forEach((l, j) => { if (xp >= l.xp) i = j; }); return {...LEVELS[i], i, next:LEVELS[i+1]}; }
+
+/* ---------------- gamificación ---------------- */
+function award(key, n, msg){
+  if (RO() || !S.ws) return;
+  const d = S.ws.data; if (d.awarded[key]) return;
+  d.awarded[key] = 1;
+  const before = levelOf(d.xp); d.xp += n;
+  toast(`⚡ +${n} XP · ${msg}`, 'xp');
+  const after = levelOf(d.xp);
+  if (after.i > before.i) setTimeout(() => showPop(after.e, '¡Subieron de nivel!', `Ahora son ${after.n}`, 'Sigan así, equipo'), 700);
+  updateHud(); saveSoon();
+}
+function checkBadges(){
+  if (!S.ws || RO()) return;
+  const d = S.ws.data, objs = validObjs(), krs = allKRs();
+  const cond = {
+    primera_idea: S.ideas.length >= 1,
+    diez_ideas:   S.ideas.length >= 10,
+    primer_obj:   objs.length >= 1,
+    primer_kr:    krs.some(krComplete),
+    kr_completos: objs.length > 0 && objs.every(o => o.krs.filter(krComplete).length >= 2),
+    iniciativas:  krs.length > 0 && krs.every(k => k.initiatives.length > 0),
+    calidad:      qualityScore() >= 80,
+    celebracion:  d.maxPhase >= 6,
+    checkin:      krs.some(k => k.checkins.length > 0),
+    kr_logrado:   krs.some(k => krProgress(k) >= 1)
+  };
+  Object.keys(cond).forEach(k => {
+    if (cond[k] && !d.badges.includes(k)) {
+      d.badges.push(k); const b = BADGES[k];
+      showPop(b.icon, '¡Nueva medalla!', b.name, b.desc);
+      d.xp += 20; updateHud(); saveSoon();
+    }
+  });
+}
+const popQ = []; let popOn = false;
+function showPop(icon, t, n, desc){ popQ.push({icon, t, n, desc}); if (!popOn) nextPop(); }
+function nextPop(){
+  const p = popQ.shift(); const el = $('#pop');
+  if (!p) { popOn = false; el.classList.remove('on'); el.innerHTML = ''; return; }
+  popOn = true;
+  el.innerHTML = `<div class="badge-pop"><div class="bp-ic">${p.icon}</div><div class="bp-t">${esc(p.t)}</div><div class="bp-n">${esc(p.n)}</div><div class="bp-d">${esc(p.desc)}</div></div>`;
+  el.classList.add('on'); confetti(70);
+  setTimeout(nextPop, 2600);
+}
+function toast(msg, type = ''){
+  const el = document.createElement('div'); el.className = 'toast ' + type; el.innerHTML = msg;
+  $('#toasts').appendChild(el);
+  setTimeout(() => { el.style.transition = 'opacity .4s'; el.style.opacity = '0'; setTimeout(() => el.remove(), 400); }, 2800);
+}
+function confetti(n = 160){
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const cv = $('#confetti'), ctx = cv.getContext('2d');
+  cv.width = innerWidth; cv.height = innerHeight;
+  const cols = ['#6C4CF1','#EC4899','#F59E0B','#10B981','#3B82F6','#EF4444','#FDE047'];
+  const ps = Array.from({length:n}, () => ({x:Math.random()*cv.width, y:-20 - Math.random()*cv.height*0.4, vx:(Math.random()-.5)*5, vy:2+Math.random()*4, r:6+Math.random()*7, c:cols[Math.floor(Math.random()*cols.length)], a:Math.random()*6, va:(Math.random()-.5)*.3}));
+  let t = 0; cancelAnimationFrame(confetti.raf);
+  (function step(){
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    ps.forEach(p => { p.x += p.vx; p.y += p.vy; p.vy += 0.04; p.a += p.va; ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.a); ctx.fillStyle = p.c; ctx.fillRect(-p.r/2, -p.r/4, p.r, p.r/2); ctx.restore(); });
+    t++; if (t < 260) confetti.raf = requestAnimationFrame(step); else ctx.clearRect(0, 0, cv.width, cv.height);
+  })();
+}
+
+/* ---------------- modales ---------------- */
+function openModal(html){ $('#modalBox').innerHTML = html; $('#modal').classList.add('on'); const f = $('#modalBox input:not([type=radio]):not([type=hidden])'); if (f) setTimeout(() => f.focus(), 50); }
+function closeModal(){ $('#modal').classList.remove('on'); $('#modalBox').innerHTML = ''; }
+function confirmBox(msg, ok = 'Sí', cancel = 'Cancelar'){
+  return new Promise(res => {
+    openModal(`<div style="text-align:center"><div style="font-size:3rem">🦉</div><h2>${OWL_NAME} pregunta…</h2><p style="font-weight:700;font-size:1.05rem;margin:10px 0 0">${msg}</p>
+      <div class="modal-actions" style="justify-content:center"><button class="btn ghost big" id="cbNo">${esc(cancel)}</button><button class="btn primary big" id="cbYes">${esc(ok)}</button></div></div>`);
+    $('#cbYes').onclick = () => { closeModal(); res(true); };
+    $('#cbNo').onclick = () => { closeModal(); res(false); };
+  });
+}
+$('#modal').addEventListener('click', e => { if (e.target.id === 'modal') closeModal(); });
+
+/* =====================================================================
+   NAVEGACIÓN
+   ===================================================================== */
+function stopTimers(){ clearInterval(pollT); pollT = null; clearInterval(partT); partT = null; }
+function render(){
+  const app = $('#app');
+  if (S.view !== 'ws') clearInterval(pollT);
+  switch (S.view) {
+    case 'landing': app.innerHTML = vLanding(); break;
+    case 'pending': app.innerHTML = vPending(); break;
+    case 'super':   app.innerHTML = vSuper(); break;
+    case 'client':  app.innerHTML = vClient(); break;
+    case 'ws':      app.innerHTML = vWorkshop(); afterWorkshop(); break;
+    case 'join':    app.innerHTML = vJoin(); break;
+    case 'part':    app.innerHTML = vPart(); break;
+    case 'report':  app.innerHTML = vReport(); break;
+  }
+}
+async function goHome(){
+  stopTimers();
+  if (!S.user) { S.view = 'landing'; return render(); }
+  try {
+    if (S.user.role === 'superadmin') { await loadSuper(); }
+    else if (S.user.role === 'client_admin' && S.user.client_id) { await loadClient(S.user.client_id); }
+    else { S.view = 'pending'; render(); }
+  } catch(e) { toast(e.message, 'err'); S.view = 'landing'; render(); }
+}
+async function loadSuper(){
+  const [clients, counts, admins] = await Promise.all([Store.listClients(), Store.workshopCounts(), Store.adminsMap()]);
+  S.clients = clients; S.counts = counts; S.admins = admins; S.view = 'super'; render();
+}
+async function loadClient(cid){
+  S.client = await Store.getClient(cid);
+  if (!S.client) throw new Error('No se encontró la empresa');
+  S.workshops = await Store.listWorkshops(cid); S.active = isActive(S.client); S.view = 'client'; render();
+}
+async function openWorkshop(id){
+  try {
+    stopTimers();
+    S.ws = ensureData(await Store.getWorkshop(id));
+    if (!S.client || S.client.id !== S.ws.client_id) S.client = await Store.getClient(S.ws.client_id);
+    S.active = isActive(S.client);
+    const L = await Store.live(S.ws.code); S.ideas = L.ideas; S.people = L.people;
+    S.seen = new Set(S.ideas.map(i => i.id)); S.sig = ''; S.krTab = null;
+    S.view = 'ws'; render(); window.scrollTo(0, 0);
+  } catch(e) { toast(e.message, 'err'); }
+}
+
+/* =====================================================================
+   VISTAS — inicio
+   ===================================================================== */
+function vLanding(){
+  return `<div class="landing">
+    <div class="hero"><div class="logo-big">🎯</div><h1>Taller de OKRs</h1>
+      <p>Convertimos ideas en metas claras, paso a paso, en equipo… ¡y jugando!</p></div>
+    <div class="choice">
+      <div class="card choice-card"><div class="ce">🙋</div><h2>Soy participante</h2><p class="hint">Tengo el código que aparece en la pantalla</p>
+        <form data-form="gocode"><input class="code-input" name="code" maxlength="6" placeholder="CÓDIGO" autocomplete="off"><button class="btn primary big">¡Entrar! 🚀</button></form></div>
+      <div class="card choice-card"><div class="ce">🧑‍🏫</div><h2>Soy facilitador</h2><p class="hint">Entro con el correo y contraseña que me dio el administrador</p>
+        <form data-form="login"><input type="email" name="email" placeholder="correo@empresa.com" required><input type="password" name="pass" placeholder="contraseña" required minlength="4"><button class="btn primary big">Entrar</button></form>
+      </div>
+    </div>
+    ${!DEMO && !API_CONFIGURED ? `<div class="warn" style="margin-top:20px">⚙️ Falta configurar el servidor: en Netlify agrega las variables <b>OKR_SECRET</b>, <b>ADMIN_EMAIL</b> y <b>ADMIN_PASSWORD</b> y vuelve a publicar (Deploys → Trigger deploy).</div>` : ''}
+    ${DEMO ? `<div class="demo-box"><b>🧪 Modo demo</b> — los datos se guardan solo en este navegador. Cuentas de prueba (contraseña <b>demo</b>):
+      <div class="row"><button class="btn ghost small" data-act="demoLogin" data-e="super@demo.com">👑 Super admin</button><button class="btn ghost small" data-act="demoLogin" data-e="admin@demo.com">🏢 Empresa Demo</button><button class="btn ghost small" data-act="demoLogin" data-e="vencido@demo.com">⛔ Cliente vencido</button></div></div>` : ''}
+    <div class="how">
+      <div class="card"><div class="e">🎯</div><b>Objetivo</b><p class="hint">¿A dónde queremos llegar?</p></div>
+      <div class="card"><div class="e">📏</div><b>Resultado clave</b><p class="hint">¿Cómo sabremos que llegamos?</p></div>
+      <div class="card"><div class="e">🛠️</div><b>Acciones</b><p class="hint">¿Qué vamos a hacer?</p></div>
+    </div>
+  </div>`;
+}
+function vPending(){
+  return `<div class="landing"><div class="card empty"><div class="ee">⏳</div><h2>Tu cuenta está lista</h2>
+    <p>Aún no tienes una empresa asignada. Pide al administrador que te dé acceso con el correo <b>${esc(S.user.email)}</b>.</p>
+    <div class="actions"><button class="btn ghost" data-act="logout">Salir</button><button class="btn primary" data-act="reload">Ya me asignaron, volver a intentar</button></div></div></div>`;
+}
+function topbar(title, extra = ''){
+  return `<header class="topbar"><div class="brand">🎯 Taller OKR <span class="hint" style="font-family:Nunito">· ${title}</span></div><div class="spacer"></div>${extra}
+    <span class="hint">${esc(S.user ? S.user.email : '')}</span><button class="btn ghost small" data-act="logout">Salir</button></header>`;
+}
+
+/* ---------------- super admin ---------------- */
+function vSuper(){
+  const st = S.clients.map(clientStatus);
+  const nAct = st.filter(s => s.k === 'ok').length, nPr = st.filter(s => s.k === 'pronto').length, nV = st.filter(s => s.k === 'venc' || s.k === 'susp').length;
+  return `${topbar('👑 Super administrador')}
+  <main class="container">
+    <div class="tiles">
+      <div class="tile"><div class="te">🏢</div><div><div class="tn">${S.clients.length}</div><div class="tl">Clientes</div></div></div>
+      <div class="tile"><div class="te">✅</div><div><div class="tn">${nAct}</div><div class="tl">Activos</div></div></div>
+      <div class="tile"><div class="te">⚠️</div><div><div class="tn">${nPr}</div><div class="tl">Vencen en ≤15 días</div></div></div>
+      <div class="tile"><div class="te">⛔</div><div><div class="tn">${nV}</div><div class="tl">Vencidos o suspendidos</div></div></div>
+    </div>
+    <div class="row"><h2>Clientes y vigencias</h2><div class="spacer"></div><button class="btn primary" data-act="newClient">＋ Nuevo cliente</button></div>
+    <div class="client-grid">${S.clients.length ? S.clients.map(clientCard).join('') : '<div class="card empty"><div class="ee">🏢</div><p>Aún no hay clientes. ¡Agrega el primero!</p></div>'}</div>
+  </main>`;
+}
+function clientCard(c){
+  const s = clientStatus(c);
+  const total = Math.max(1, daysBetween(c.valid_from, c.valid_to));
+  const used = clamp(daysBetween(c.valid_from, todayISO()) / total, 0, 1);
+  const admins = S.admins[c.id] || [];
+  return `<div class="card client-card">
+    <h3>🏢 ${esc(c.name)}</h3>
+    <div class="row" style="margin-top:6px"><span class="pill" style="background:${s.color}22;color:${s.color}">${s.label}</span><span class="pill">🧩 ${S.counts[c.id] || 0} taller${(S.counts[c.id] || 0) === 1 ? '' : 'es'}</span></div>
+    <div class="vbar"><div style="width:${used*100}%;background:${s.color}"></div></div>
+    <div class="hint">📅 ${fmtDate(c.valid_from)} → ${fmtDate(c.valid_to)}</div>
+    <div class="hint">👤 ${admins.length ? admins.map(esc).join(', ') : 'Sin administrador asignado'}</div>
+    <div class="cc-actions">
+      <button class="btn ghost small" data-act="editClient" data-id="${c.id}">✏️ Editar</button>
+      <button class="btn ghost small" data-act="renew" data-id="${c.id}" data-m="3">＋3 meses</button>
+      <button class="btn ghost small" data-act="renew" data-id="${c.id}" data-m="12">＋1 año</button>
+      <button class="btn ghost small" data-act="toggleClient" data-id="${c.id}">${c.status === 'activo' ? '⏸️ Suspender' : '▶️ Activar'}</button>
+      <button class="btn ghost small" data-act="assignAdmin" data-id="${c.id}">👤 Usuario y contraseña</button>
+      <button class="btn ghost small" data-act="report" data-id="${c.id}">📊 Reporte</button>
+      <button class="btn ghost small danger-ghost" data-act="delClient" data-id="${c.id}">🗑️ Eliminar</button>
+      <button class="btn primary small" data-act="viewClient" data-id="${c.id}">👁️ Ver talleres</button>
+    </div></div>`;
+}
+function clientForm(c){
+  const t = todayISO(); c = c || {name:'', contact:'', valid_from:t, valid_to:addMonths(t, 12), status:'activo'};
+  return `<form class="modal-form" data-form="saveClient">
+    <h2>${c.id ? '✏️ Editar cliente' : '🏢 Nuevo cliente'}</h2>
+    <input type="hidden" name="id" value="${esc(c.id || '')}">
+    <label>Nombre de la empresa<input name="name" required value="${esc(c.name)}"></label>
+    <label>Contacto (opcional)<input name="contact" value="${esc(c.contact || '')}"></label>
+    <div class="grid2"><label style="font-weight:800">Vigencia desde<input type="date" name="valid_from" required value="${esc(String(c.valid_from).slice(0,10))}"></label>
+    <label style="font-weight:800">Vigencia hasta<input type="date" name="valid_to" required value="${esc(String(c.valid_to).slice(0,10))}"></label></div>
+    <label>Estado<select name="status"><option value="activo" ${c.status==='activo'?'selected':''}>✅ Activo</option><option value="suspendido" ${c.status!=='activo'?'selected':''}>⏸️ Suspendido</option></select></label>
+    <p class="hint">Cuando la vigencia termina, el cliente puede <b>ver</b> sus talleres pero ya no puede editarlos ni crear nuevos.</p>
+    <div class="modal-actions"><button type="button" class="btn ghost" data-act="closeModal">Cancelar</button><button class="btn primary">Guardar</button></div></form>`;
+}
+
+/* ---------------- cliente ---------------- */
+function vClient(){
+  const c = S.client, s = clientStatus(c), isSuper = S.user.role === 'superadmin';
+  const extra = isSuper ? `<button class="btn ghost small" data-act="backSuper">⬅ Clientes</button>` : '';
+  return `${topbar(esc(c.name), extra)}
+  <main class="container">
+    <div class="client-hero"><div class="he">🏢</div><div><h1>¡Hola, ${esc(c.name)}! 👋</h1>
+      <div style="font-weight:800;margin-top:6px">${s.label} · Vigencia hasta ${fmtDate(c.valid_to)}</div></div></div>
+    ${S.active ? '' : '<div class="warn" style="margin-top:14px">🔒 Tu licencia no está vigente. Puedes consultar tus talleres, pero no editarlos ni crear nuevos. Contacta a tu administrador para renovarla.</div>'}
+    <div class="row" style="margin-top:22px"><h2>🧩 Tus talleres</h2><div class="spacer"></div><button class="btn ghost" data-act="report">📊 Reporte de talleres</button>${S.active ? '<button class="btn primary" data-act="newWs">＋ Nuevo taller</button>' : ''}</div>
+    <div class="ws-grid">
+      ${S.workshops.map(wsCard).join('')}
+      ${S.active ? `<button class="add-card" data-act="newWs">🚀<span>Crear un taller nuevo</span></button>` : ''}
+    </div>
+    ${!S.workshops.length && !S.active ? '<div class="card empty"><div class="ee">📭</div><p>No hay talleres.</p></div>' : ''}
+  </main>`;
+}
+function wsCard(w){
+  const P = PHASES[w.phase || 0];
+  return `<div class="card ws-card" data-act="openWs" data-id="${w.id}">
+    <div class="wsc-top"><div class="wsc-ic">${P.icon}</div><div style="flex:1"><h3>${esc(w.name)}</h3><div class="hint">${esc(w.area)} · ${esc(w.period_label)}</div></div>
+    ${S.active || S.user.role === 'superadmin' ? `<button class="x" data-act="delWs" data-id="${w.id}" title="Eliminar">🗑️</button>` : ''}</div>
+    <div class="mini-journey">${PHASES.map((_, i) => `<span class="${i <= (w.phase||0) ? 'on' : ''}"></span>`).join('')}</div>
+    <div class="row"><span class="pill">Paso ${(w.phase||0)+1}: ${P.short}</span><span class="pill">🔑 ${esc(w.code)}</span></div></div>`;
+}
+function newWsForm(){
+  const t = todayISO();
+  return `<form class="modal-form" data-form="newWs" id="newWsForm">
+    <h2>🚀 Nuevo taller</h2>
+    <label>¿Cómo se llama el taller?<input name="name" required placeholder="Ej: OKRs Operaciones 2027"></label>
+    <div class="lbl">¿Para quién son estos OKRs?</div>
+    <div class="toggle2"><label class="radio-card"><input type="radio" name="level" value="empresa" checked data-change="ppv"><span>🏢 Toda la empresa</span></label>
+      <label class="radio-card"><input type="radio" name="level" value="area" data-change="ppv"><span>👥 Un área o equipo</span></label></div>
+    <label style="display:none">Nombre del área o equipo<input name="area" placeholder="Ej: Recursos Humanos"></label>
+    <div class="lbl">¿Para cuánto tiempo?</div>
+    <div class="period-grid">${PERIODS.map((p, i) => `<label class="radio-card"><input type="radio" name="ptype" value="${p.k}" ${i===1?'checked':''} data-change="ppv"><span><b style="font-size:1.4rem">${p.e}</b>${p.n}<small>${p.note}</small></span></label>`).join('')}</div>
+    <label>¿Desde cuándo?<input type="date" name="start" value="${t}" data-change="ppv"></label>
+    <div class="period-preview" id="ppv">${periodPreview('trimestre', t)}</div>
+    <div class="modal-actions"><button type="button" class="btn ghost" data-act="closeModal">Cancelar</button><button class="btn primary big">Crear taller 🎉</button></div></form>`;
+}
+function periodInfo(type, start){
+  const P = PERIODS.find(p => p.k === type) || PERIODS[1];
+  const d = parseISO(start), y = d.getFullYear(), m = d.getMonth();
+  let label = '';
+  if (type === 'mes') { label = d.toLocaleDateString('es-MX', {month:'long', year:'numeric'}); label = label[0].toUpperCase() + label.slice(1); }
+  else if (type === 'trimestre') label = `T${Math.floor(m/3)+1} ${y}`;
+  else if (type === 'semestre') label = `S${m < 6 ? 1 : 2} ${y}`;
+  else label = `Año ${y}`;
+  return {label, end:addDays(addMonths(start, P.m), -1)};
+}
+function periodPreview(type, start){ const i = periodInfo(type, start); return `🗓️ <b>${esc(i.label)}</b> · del ${fmtDate(start)} al ${fmtDate(i.end)}`; }
+
+/* =====================================================================
+   VISTA — TALLER
+   ===================================================================== */
+function hudHTML(){
+  const d = S.ws.data, L = levelOf(d.xp);
+  const pct = L.next ? (d.xp - L.xp) / (L.next.xp - L.xp) * 100 : 100;
+  return `<div class="lvl">${L.e} ${L.n}</div><div class="xpbar" title="Siguiente nivel: ${L.next ? L.next.n : '¡máximo!'}"><div style="width:${pct}%"></div></div><div class="xpn">⚡ ${d.xp} XP<span id="saving"></span></div>`;
+}
+function updateHud(){ const h = $('#hud'); if (h) h.innerHTML = hudHTML(); }
+function setSaving(t){ const s = $('#saving'); if (s) s.textContent = t; }
+function saveSoon(){
+  if (RO() || !S.ws) return;
+  clearTimeout(saveT); setSaving(' · guardando…');
+  const w = S.ws;
+  saveT = setTimeout(async () => {
+    try { await Store.saveWorkshop(w); setSaving(' · ✓ guardado'); }
+    catch(e) { setSaving(' · ⚠️ sin guardar'); toast('No se pudo guardar: ' + esc(e.message), 'err'); }
+  }, 700);
+}
+function coach(tip){ return `<div class="coach"><div class="owl">🦉</div><div class="say"><b>${OWL_NAME} dice:</b> ${tip}</div></div>`; }
+function okrStrip(active){
+  const items = [['obj','🎯','Objetivo','¿A dónde vamos?','Llegar a la cima de la montaña 🏔️'],['kr','📏','Resultado clave','¿Cómo sabremos que llegamos?','Subir de 0 a 3,000 metros'],['ini','🛠️','Acción','¿Qué vamos a hacer?','Entrenar 3 veces por semana']];
+  return `<div class="strip">${items.map(([k, ic, t, qq, ex], i) => `<div class="strip-i ${k===active?'on':''}"><div class="si-ic">${ic}</div><div><b>${t}</b><div class="si-q">${qq}</div><div class="si-ex">Ej: ${ex}</div></div></div>${i < 2 ? '<div class="strip-arrow">➜</div>' : ''}`).join('')}</div>`;
+}
+function journeyHTML(){
+  const w = S.ws, d = w.data;
+  return PHASES.map((P, i) => {
+    let cls = 'locked';
+    if (i === w.phase) cls = 'current'; else if (i <= d.maxPhase) cls = i < w.phase || i <= d.maxPhase ? 'done' : 'visited';
+    if (i > d.maxPhase && i !== w.phase) cls = 'locked';
+    return `<button class="stop ${cls}" style="--sc:${P.color}" ${cls === 'locked' ? 'disabled' : `data-act="goto" data-i="${i}"`} title="${P.name}"><div class="dot">${P.icon}</div><div class="slbl">${P.short}</div></button>`;
+  }).join('');
+}
+function nextLabel(){
+  const w = S.ws;
+  if (w.phase === 1) { const st = w.data.ideaStep; if (st === 'proponer') return 'Siguiente: Votar ⭐'; if (st === 'votar') return 'Siguiente: Elegir 🎯'; return 'Convertir en objetivos ▶'; }
+  if (w.phase === 5) return '¡Terminamos! 🏆';
+  if (w.phase === 6) return 'Ir a seguimiento 📈';
+  return 'Siguiente ▶';
+}
+function vWorkshop(){
+  const w = S.ws, P = PHASES[w.phase];
+  const body = {contexto:pContexto, ideas:pIdeas, objetivos:pObjetivos, krs:pKRs, iniciativas:pIniciativas, revision:pRevision, celebracion:pCelebracion, seguimiento:pSeguimiento}[P.key]();
+  return `<div class="ws">
+    <header class="topbar">
+      <button class="btn ghost small" data-act="home" title="Mis talleres">🏠</button>
+      <div class="ws-title"><div class="t">${esc(w.name)}</div><div class="sub">${esc(w.area)} · ${esc(w.period_label)}</div></div>
+      <div id="hud" class="hud">${hudHTML()}</div>
+      <button class="code-chip" data-act="qr">📱 Código <b>${esc(w.code)}</b></button>
+    </header>
+    ${RO() ? '<div class="ro-banner">🔒 La vigencia de esta licencia terminó. Puedes ver todo, pero no editar. Contacta a tu administrador.</div>' : ''}
+    <nav class="journey">${journeyHTML()}</nav>
+    <main class="phase" style="--pc:${P.color}">
+      <div class="phase-head"><div class="phase-icon">${P.icon}</div><div><div class="step">Paso ${w.phase+1} de ${PHASES.length}</div><h1>${P.name}</h1><p>${P.desc}</p></div></div>
+      ${coach(P.tip)}
+      <div id="phase-body">${body}</div>
+    </main>
+    <footer class="bottom-nav">
+      <button class="btn big ghost" data-act="prev" ${w.phase === 0 ? 'disabled' : ''}>◀ Atrás</button>
+      <div class="mid">${P.icon} ${P.short}</div>
+      ${w.phase < PHASES.length - 1 ? `<button class="btn big primary" data-act="next">${nextLabel()}</button>` : '<span></span>'}
+    </footer>
+  </div>`;
+}
+function afterWorkshop(){
+  const k = PHASES[S.ws.phase].key;
+  clearInterval(pollT); pollT = null;
+  if (k === 'ideas') { drawIdeaMap(); makeQR('#qrSmall', 130); pollT = setInterval(refreshIdeas, 4000); startTick(); }
+  if (k === 'krs') drawKRMap();
+  if (k === 'revision' && S.revTab === 'mapa') drawFullMap();
+  if (RO()) $$('#phase-body input, #phase-body textarea, #phase-body select, .mut').forEach(e => e.disabled = true);
+}
+function goPhase(i){
+  const w = S.ws; w.phase = i; w.data.maxPhase = Math.max(w.data.maxPhase, i);
+  if (i === 6) checkBadges();
+  saveSoon(); render(); window.scrollTo(0, 0);
+  if (i === 6) { confetti(260); setTimeout(() => confetti(200), 900); }
+}
+
+/* ---------- Fase 0: contexto ---------- */
+function stickies(key, color){
+  const list = S.ws.data.context[key];
+  return `<div class="stickies">${list.map((s, i) => `<div class="sticky" style="--sc:${color};--rot:${(i%3-1)*1.5}deg">${esc(s.text)}<button class="x mut" data-act="delSticky" data-k="${key}" data-id="${s.id}">×</button></div>`).join('') || '<span class="hint">Aún no hay notas…</span>'}</div>
+    <form class="add-row" data-form="sticky" data-k="${key}"><input name="t" maxlength="140" placeholder="Escribe una nota y presiona Enter" autocomplete="off"><button class="btn primary mut">＋</button></form>`;
+}
+function pContexto(){
+  const c = S.ws.data.context;
+  return `<div class="grid2">
+    <div class="card ctx"><div class="card-emoji">🏢</div><h3>¿Para qué existimos?</h3><p class="hint">Nuestra misión en una frase. Ej: "Hacer más fácil el día de nuestros clientes".</p>
+      <textarea rows="3" data-b="ctx||mision" placeholder="Escribe aquí…">${esc(c.mision)}</textarea></div>
+    <div class="card ctx"><div class="card-emoji">🔭</div><h3>¿Cómo nos imaginamos en el futuro?</h3><p class="hint">Nuestra visión: cómo se ve el éxito en 3 a 5 años.</p>
+      <textarea rows="3" data-b="ctx||vision" placeholder="Escribe aquí…">${esc(c.vision)}</textarea></div>
+    <div class="card ctx"><div class="card-emoji">😣</div><h3>¿Qué nos duele hoy?</h3><p class="hint">Problemas, quejas, cosas que no salen bien.</p>${stickies('dolores', '#FECACA')}</div>
+    <div class="card ctx"><div class="card-emoji">✨</div><h3>¿Qué oportunidades vemos?</h3><p class="hint">Cosas buenas que podríamos aprovechar.</p>${stickies('oportunidades', '#BBF7D0')}</div>
+  </div>`;
+}
+
+/* ---------- Fase 1: lluvia de ideas ---------- */
+function joinURL(){ return location.origin + location.pathname + '?code=' + S.ws.code; }
+function makeQR(sel, size){
+  const el = $(sel); if (!el) return; el.innerHTML = '';
+  if (window.QRCode) { try { new QRCode(el, {text:joinURL(), width:size, height:size, colorDark:'#1E1B4B', colorLight:'#ffffff'}); } catch(e){} }
+}
+function pIdeas(){
+  const st = S.ws.data.ideaStep;
+  const steps = [['proponer','✍️','Proponer'],['votar','⭐','Votar'],['elegir','🎯','Elegir']];
+  return `<div class="steps3">${steps.map(([k, ic, l], i) => `<button class="step-pill ${st === k ? 'on' : ''} mut" data-act="ideaStep" data-k="${k}"><span>${i+1}</span>${ic} ${l}</button>`).join('<span class="arrow">➜</span>')}</div>
+  <div class="ideas-layout">
+    <div>
+      <div id="ideamap" class="mindmap"></div>
+      ${st === 'proponer' ? `<form class="idea-input" data-form="idea"><input id="ideaText" name="t" maxlength="140" placeholder="💡 Escribe una idea de lo que queremos lograr…" autocomplete="off"><button class="btn primary big mut">Agregar</button></form>` : ''}
+      ${st === 'votar' ? `<p class="hint" style="margin-top:10px">⭐ Cada participante tiene <b>5 estrellas</b> en su celular. Aquí también pueden sumar estrellas en grupo dando clic en ⭐.</p>` : ''}
+      ${st === 'elegir' ? `<p class="hint" style="margin-top:10px">🎯 Den clic en las ideas para elegir <b>hasta 3</b>. Las elegidas se convierten en objetivos.</p>` : ''}
+    </div>
+    <aside class="side" id="ideaSide">${ideaSideHTML()}</aside>
+  </div>`;
+}
+function ideaSideHTML(){
+  const st = S.ws.data.ideaStep, sel = S.ws.data.selected;
+  const join = `<div class="card side-card join-card"><div class="sc-t">📱 ¡Únete desde tu celular!</div><div class="join-code">${esc(S.ws.code)}</div><div id="qrSmall" class="qr-small"></div><div class="hint">${esc(joinURL())}</div></div>`;
+  const timer = `<div class="card side-card"><div class="sc-t">⏱️ Tiempo de ideas</div><div class="timer" id="timerTxt">${timerText()}</div>
+    <div class="row" style="justify-content:center;margin-top:8px">${S.timerEnd ? '<button class="btn ghost small" data-act="timer" data-m="0">⏹ Parar</button>' : '<button class="btn ghost small" data-act="timer" data-m="3">3 min</button><button class="btn ghost small" data-act="timer" data-m="5">5 min</button>'}</div></div>`;
+  const people = `<div class="card side-card"><div class="sc-t">🙌 Participantes (${S.people.length})</div>
+    ${S.people.length ? `<ul class="people">${[...S.people].sort((a, b) => b.xp - a.xp).map((p, i) => `<li><span class="av">${esc(p.avatar)}</span>${i < 3 ? ['🥇','🥈','🥉'][i] : ''} ${esc(p.name)}<span class="xp">⚡${p.xp}</span></li>`).join('')}</ul>` : '<p class="hint">Aún nadie se une. ¡Compartan el código! 👆</p>'}</div>`;
+  const ranked = [...S.ideas].sort((a, b) => b.votes - a.votes).slice(0, 12);
+  const rank = `<div class="card side-card"><div class="sc-t">🏅 Ranking de ideas</div>
+    <ul class="rank">${ranked.map((i, n) => `<li class="${sel.includes(i.id) ? 'sel' : ''}" data-act="pick" data-id="${i.id}"><span class="medal">${['🥇','🥈','🥉'][n] || (n+1)}</span><span class="rt">${esc(short(i.text, 60))}</span><span>⭐${i.votes}</span><span>${sel.includes(i.id) ? '🎯' : '○'}</span></li>`).join('')}</ul>
+    <p style="font-weight:900;margin:10px 0 6px">Elegidas: ${sel.length}/3</p>
+    <button class="btn primary mut" style="width:100%" data-act="convert">🎯 Convertir en objetivos</button></div>`;
+  return (st === 'elegir' ? rank : '') + join + (st === 'proponer' ? timer : '') + (st !== 'elegir' ? people : '');
+}
+function timerText(){
+  if (!S.timerEnd) return '--:--';
+  const s = Math.max(0, Math.round((S.timerEnd - Date.now()) / 1000));
+  return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
+}
+function startTick(){
+  clearInterval(tickT);
+  tickT = setInterval(() => {
+    const el = $('#timerTxt'); if (!S.timerEnd) return;
+    const left = S.timerEnd - Date.now();
+    if (el) { el.textContent = timerText(); el.classList.toggle('low', left < 30000); }
+    if (left <= 0) { S.timerEnd = null; toast('⏰ ¡Tiempo! Ahora vamos a votar ⭐', 'ok'); confetti(80); const side = $('#ideaSide'); if (side) { side.innerHTML = ideaSideHTML(); makeQR('#qrSmall', 130); } }
+  }, 1000);
+}
+function ideaColor(id){ return IDEA_COLORS[hashIdx(id, IDEA_COLORS.length)]; }
+function ideaNode(i){
+  const st = S.ws.data.ideaStep, sel = S.ws.data.selected.includes(i.id);
+  let html = `<div class="mm-text">${esc(i.text)}</div><div class="mm-meta"><span title="${esc(i.author || '')}">${esc(i.avatar || '🙂')}</span>`;
+  if (st === 'votar') html += `<button class="star-btn mut" data-act="vote" data-id="${i.id}">⭐ ${i.votes}</button>`;
+  else if (i.votes) html += `<span>⭐ ${i.votes}</span>`;
+  html += '</div>';
+  if (st === 'proponer') html += `<button class="x node-x mut" data-act="delIdea" data-id="${i.id}" title="Quitar">×</button>`;
+  const isNew = !S.seen.has(i.id); S.seen.add(i.id);
+  const scale = st !== 'proponer' ? 1 + Math.min(i.votes, 10) * 0.035 : 1;
+  return {html, color:ideaColor(i.id), cls:(sel ? 'sel ' : '') + (st === 'elegir' ? 'pickable ' : '') + (isNew ? 'new ' : '') + (st === 'elegir' && S.ws.data.selected.length >= 3 && !sel ? 'dim' : ''),
+          attrs:(st === 'elegir' ? `data-act="pick" data-id="${i.id}"` : '') + (scale !== 1 ? ` data-scale="${scale}"` : '')};
+}
+function drawIdeaMap(){
+  const el = $('#ideamap'); if (!el) return;
+  const w = S.ws;
+  const root = {html:`🎯 ¿Qué queremos lograr en <b>${esc(w.period_label)}</b>?<div style="font-size:.8rem;font-weight:700;opacity:.85;margin-top:4px">${esc(w.area)}</div>`};
+  const kids = S.ideas.map(ideaNode);
+  if (!kids.length) { el.innerHTML = ''; drawMindMap(el, {...root, children:[{html:'💭 Aquí aparecerán sus ideas…', color:'#F3F4F6'}]}, {rings:true}); return; }
+  drawMindMap(el, {...root, children:kids}, {rings:true});
+}
+async function refreshIdeas(){
+  if (!S.ws || S.view !== 'ws') return;
+  try {
+    const L = await Store.live(S.ws.code), ideas = L.ideas, people = L.people;
+    const sig = ideas.map(i => i.id + ':' + i.votes).join(',') + '|' + people.map(p => p.name + p.xp).join(',');
+    S.ideas = ideas; S.people = people;
+    if (sig === S.sig) return; S.sig = sig;
+    if (PHASES[S.ws.phase].key === 'ideas') {
+      drawIdeaMap();
+      const side = $('#ideaSide'); if (side) { side.innerHTML = ideaSideHTML(); makeQR('#qrSmall', 130); if (RO()) $$('.mut', side).forEach(e => e.disabled = true); }
+    }
+    checkBadges();
+  } catch(e) {}
+}
+function convertSelected(){
+  const d = S.ws.data; let n = 0;
+  d.selected.forEach(id => {
+    const idea = S.ideas.find(i => i.id === id); if (!idea) return;
+    if (d.objectives.some(o => o.fromIdea === id)) return;
+    d.objectives.push({id:uid(), text:idea.text, why:'', type:'aspiracional', align:'', fromIdea:id, krs:[], parking:[]}); n++;
+  });
+  return n;
+}
+
+/* ---------- Mapa mental genérico ---------- */
+function drawMindMap(el, root, opts = {}){
+  const W = el.clientWidth, H = el.clientHeight; if (!W) return;
+  const kids = root.children || [], n = kids.length;
+  // Muchas ideas o pantalla angosta: muro de burbujas
+  if (opts.rings && (n > 36 || W < 620)) {
+    el.innerHTML = `<div class="wall-wrap"><div class="wall-center"><div class="mm-node lvl0">${root.html}</div></div><div class="wall">${kids.map(k => `<div class="mm-node lvl1 ${k.cls||''}" style="--nc:${k.color}" ${k.attrs||''}>${k.html}</div>`).join('')}</div></div>`;
+    return;
+  }
+  const cx = W/2, cy = H/2, nodes = [{...root, x:cx, y:cy, lvl:0}], links = [];
+  if (opts.rings) {
+    const caps = [8, 13, 17]; let idx = 0, ring = 0;
+    while (idx < n) {
+      const cap = caps[Math.min(ring, 2)], count = Math.min(cap, n - idx);
+      const rx = W * (0.25 + 0.12*ring), ry = H * (0.25 + 0.105*ring), off = ring * 0.35;
+      for (let j = 0; j < count; j++) {
+        const a = -Math.PI/2 + off + j * 2*Math.PI / count, k = kids[idx + j];
+        nodes.push({...k, x:cx + rx*Math.cos(a), y:cy + ry*Math.sin(a), lvl:1});
+        links.push([0, nodes.length - 1, '#C4B5FD']);
+      }
+      idx += count; ring++;
+    }
+  } else {
+    const R1x = W * 0.25, R1y = H * 0.27, R2x = W * 0.42, R2y = H * 0.42;
+    kids.forEach((k, i) => {
+      const a = -Math.PI/2 + i * 2*Math.PI / Math.max(n, 1);
+      const pi = nodes.length; nodes.push({...k, x:cx + R1x*Math.cos(a), y:cy + R1y*Math.sin(a), lvl:1}); links.push([0, pi, k.color]);
+      const g = k.children || [], m = g.length, wedge = Math.min(2*Math.PI / Math.max(n, 1) * 0.75, Math.PI * 0.55);
+      g.forEach((c, j) => {
+        const b = a + (m > 1 ? (j / (m - 1) - 0.5) * wedge : 0);
+        nodes.push({...c, color:c.color || k.color, x:cx + R2x*Math.cos(b), y:cy + R2y*Math.sin(b), lvl:2}); links.push([pi, nodes.length - 1, k.color]);
+      });
+    });
+  }
+  nodes.forEach(nd => { const hw = nd.lvl === 0 ? 120 : nd.lvl === 1 ? 88 : 76; nd.x = clamp(nd.x, hw, W - hw); nd.y = clamp(nd.y, 36, H - 36); });
+  const svg = `<svg class="mm-links" width="${W}" height="${H}">${links.map(([a, b, c]) => { const A = nodes[a], B = nodes[b], mx = (A.x + B.x)/2, my = (A.y + B.y)/2;
+      return `<path d="M${A.x},${A.y} Q${mx + (B.y - A.y)*0.12},${my - (B.x - A.x)*0.12} ${B.x},${B.y}" stroke="${c || '#C4B5FD'}"/>`; }).join('')}</svg>`;
+  el.innerHTML = svg + nodes.map(nd => `<div class="mm-node lvl${nd.lvl} ${nd.cls || ''}" style="left:${nd.x}px;top:${nd.y}px;--nc:${nd.color || '#6C4CF1'}" ${nd.attrs || ''}>${nd.html}</div>`).join('');
+}
+
+/* ---------- Fase 2: objetivos ---------- */
+function objChecks(o){
+  const t = (o.text || '').trim(), words = t ? t.split(/\s+/).length : 0;
+  return [
+    {ok:t.length > 0 && !/\d/.test(t), l:'Sin números (los números van después)'},
+    {ok:words >= 3 && words <= 18, l:'Corto y claro (3 a 18 palabras)'},
+    {ok:startsWithVerb(t), l:'Empieza con un verbo: Ser, Lograr, Crecer…'},
+    {ok:(o.why || '').trim().length > 3, l:'Dice por qué es importante'}
+  ];
+}
+function objLive(o){
+  const ch = objChecks(o), n = ch.filter(c => c.ok).length;
+  return `<div class="stars">${'★'.repeat(n)}${'☆'.repeat(4 - n)}</div>${n === 4 ? '<div class="okbox">🌟 ¡Objetivo perfecto!</div>' : ''}<ul class="checks">${ch.map(c => `<li class="${c.ok ? 'ok' : ''}">${c.ok ? '✅' : '⬜'} ${c.l}</li>`).join('')}</ul>`;
+}
+function objCard(o, i){
+  return `<div class="card obj" style="--oc:${OBJ_COLORS[i % OBJ_COLORS.length]}">
+    <div class="obj-top"><span class="obj-num">🎯 Objetivo ${i+1}</span><button class="x mut" data-act="delObj" data-id="${o.id}" title="Eliminar">🗑️</button></div>
+    <label class="lbl">¿A dónde queremos llegar?</label>
+    <textarea class="big-text" rows="2" data-b="obj|${o.id}|text" placeholder="Ej: Ser la tienda favorita del barrio para el desayuno">${esc(o.text)}</textarea>
+    <label class="lbl">¿Por qué es importante?</label>
+    <input data-b="obj|${o.id}|why" value="${esc(o.why)}" placeholder="Porque…">
+    <label class="lbl">¿Qué tan retador es?</label>
+    <div class="toggle2"><button class="${o.type === 'aspiracional' ? 'on' : ''} mut" data-act="objType" data-id="${o.id}" data-k="aspiracional">🚀 Aspiracional<small>Si llegamos al 70%, ¡es un éxito!</small></button>
+      <button class="${o.type === 'comprometido' ? 'on' : ''} mut" data-act="objType" data-id="${o.id}" data-k="comprometido">🔒 Comprometido<small>Tenemos que llegar al 100%</small></button></div>
+    <label class="lbl">¿Con qué objetivo más grande se conecta? <small class="hint">(opcional)</small></label>
+    <input data-b="obj|${o.id}|align" value="${esc(o.align || '')}" placeholder="Ej: Objetivo de la empresa 2027">
+    <div class="live" data-live="obj|${o.id}">${objLive(o)}</div></div>`;
+}
+function pObjetivos(){
+  const objs = S.ws.data.objectives;
+  return `${okrStrip('obj')}
+    <div class="obj-grid">${objs.map(objCard).join('')}
+      ${objs.length < 5 ? `<button class="add-card mut" data-act="addObj">＋<span>Agregar objetivo</span></button>` : ''}</div>
+    ${objs.length > 3 ? '<div class="warn">🤏 Tienen más de 3 objetivos. Menos es más: elijan los que más importan.</div>' : ''}`;
+}
+
+/* ---------- Fase 3: resultados clave ---------- */
+function objColor(o){ const i = S.ws.data.objectives.indexOf(o); return OBJ_COLORS[(i < 0 ? 0 : i) % OBJ_COLORS.length]; }
+function krWarn(k){
+  if (isTaskLike(k.metric)) return `<div class="warn">🤔 Esto suena a <b>tarea</b>, no a resultado. Pregúntense: <i>¿qué número cambia si lo hacemos?</i><br><button class="btn small ghost mut" style="margin-top:6px" data-act="krToTask" data-id="${k.id}">Mover a "¿Qué vamos a hacer?" 🛠️</button></div>`;
+  if (isNum(k.base) && isNum(k.target) && Number(k.base) === Number(k.target)) return '<div class="warn">🎯 La meta debe ser distinta a donde estamos hoy.</div>';
+  return '';
+}
+function krLive(k){
+  if (!(k.metric || '').trim()) return '<p class="hint">✏️ Escribe qué número quieren mover.</p>';
+  const miss = [];
+  if (!k.unit) miss.push('en qué se mide ($, # o %)');
+  if (!isNum(k.base)) miss.push('cuánto tenemos hoy');
+  if (!isNum(k.target)) miss.push('a cuánto queremos llegar');
+  return `<div class="sentence">📏 ${esc(krSentence(k))}</div>
+    ${miss.length ? `<p class="hint" style="margin-top:6px">Falta: ${miss.join(', ')}.</p>` : krComplete(k) ? `<div class="thermo"><span>📍 ${fmtVal(k.base, k.unit)}</span><div class="tb"></div><span>🏁 ${fmtVal(k.target, k.unit)}</span></div><div class="okbox" style="margin-top:8px">✅ ¡Resultado clave listo!${(k.owner || '').trim() ? '' : ' Solo falta el dueño 🙋'}</div>` : ''}`;
+}
+function krCard(o, k, i){
+  return `<div class="card kr" style="--oc:${objColor(o)}">
+    <div class="obj-top"><span class="kr-num">📏 Resultado clave ${i+1}</span><button class="x mut" data-act="delKR" data-id="${k.id}" title="Eliminar">🗑️</button></div>
+    <label class="lbl">¿Qué número queremos mover?</label>
+    <input class="big-text" data-b="kr|${k.id}|metric" value="${esc(k.metric || '')}" placeholder="Ej: Cafés vendidos por tienda al día">
+    <div data-live="krwarn|${k.id}">${krWarn(k)}</div>
+    <label class="lbl">¿En qué lo medimos?</label>
+    <div class="units">${UNITS.map(u => `<button class="unit ${k.unit === u.k ? 'on' : ''} mut" data-act="krUnit" data-id="${k.id}" data-k="${u.k}"><b>${u.k}</b><small>${u.l}</small></button>`).join('')}</div>
+    <div class="row3"><div><label class="lbl">📍 Hoy estamos en</label><input type="number" step="any" data-b="kr|${k.id}|base" value="${isNum(k.base) ? k.base : ''}" placeholder="0"></div>
+      <div class="arrowbig">➜</div>
+      <div><label class="lbl">🏁 Queremos llegar a</label><input type="number" step="any" data-b="kr|${k.id}|target" value="${isNum(k.target) ? k.target : ''}" placeholder="0"></div></div>
+    <label class="lbl">🙋 ¿Quién lo cuida?</label><input data-b="kr|${k.id}|owner" value="${esc(k.owner || '')}" placeholder="Nombre del responsable">
+    <div class="live" data-live="kr|${k.id}">${krLive(k)}</div></div>`;
+}
+function pKRs(){
+  const objs = validObjs();
+  if (!objs.length) return `<div class="card empty"><div class="ee">🎯</div><h2>Primero escriban al menos un objetivo</h2><button class="btn primary" data-act="goto" data-i="2">Ir a objetivos</button></div>`;
+  if (!S.krTab || !objs.find(o => o.id === S.krTab)) S.krTab = objs[0].id;
+  const o = objs.find(x => x.id === S.krTab);
+  return `${okrStrip('kr')}
+    <div class="obj-tabs">${objs.map((x, i) => `<button class="tab ${x.id === o.id ? 'on' : ''}" style="--oc:${objColor(x)}" data-act="krTab" data-id="${x.id}">🎯 ${esc(short(x.text, 46))} <span class="badge">${x.krs.filter(krComplete).length}</span></button>`).join('')}</div>
+    <div class="kr-layout">
+      <div class="card mapcard"><div id="krmap" class="mindmap small"></div></div>
+      <div class="kr-list">${o.krs.map((k, i) => krCard(o, k, i)).join('')}
+        ${o.krs.length < 6 ? `<button class="add-card wide mut" data-act="addKR" data-id="${o.id}">＋ Agregar resultado clave</button>` : ''}
+        ${o.krs.length === 1 ? '<p class="hint">💡 Lo ideal son de 2 a 4 resultados clave por objetivo.</p>' : ''}
+        ${o.krs.length > 4 ? '<div class="warn">Con 2 a 4 resultados clave es suficiente.</div>' : ''}</div>
+    </div>`;
+}
+function drawKRMap(){
+  const el = $('#krmap'); if (!el) return;
+  const o = S.ws.data.objectives.find(x => x.id === S.krTab); if (!o) return;
+  const col = objColor(o);
+  drawMindMap(el, {html:'🎯 ' + esc(short(o.text, 80)), children:o.krs.map((k, i) => ({
+    html:`📏 ${esc(short(krSentence(k) || k.metric || 'Resultado clave ' + (i+1), 70))}`, color:col, cls:'boxed',
+    children:k.initiatives.map(n => ({html:'🛠️ ' + esc(short(n.text, 40))}))
+  }))});
+}
+let krMapT = null;
+function drawKRMapSoon(){ clearTimeout(krMapT); krMapT = setTimeout(drawKRMap, 250); }
+
+/* ---------- Fase 4: iniciativas ---------- */
+function pIniciativas(){
+  const objs = validObjs();
+  if (!objs.length) return `<div class="card empty"><div class="ee">🎯</div><h2>Primero escriban objetivos y resultados clave</h2></div>`;
+  return okrStrip('ini') + objs.map(o => {
+    const col = objColor(o);
+    return `<section class="ini-obj" style="--oc:${col}">
+      <h2>🎯 ${esc(o.text)}</h2>
+      ${o.parking.length ? `<div class="parking">📦 Acciones guardadas: ${o.parking.map(p => `<span class="chip">${esc(p.text)}
+        <select data-change="assignPark" data-o="${o.id}" data-id="${p.id}" class="mut"><option value="">Asignar a…</option>${o.krs.map((k, i) => `<option value="${k.id}">📏 ${esc(short(k.metric || 'Resultado ' + (i+1), 40))}</option>`).join('')}</select></span>`).join('')}</div>` : ''}
+      ${o.krs.length ? `<div class="ini-krs">${o.krs.map((k, ki) => `<div class="card ini-kr">
+        <div class="kr-sentence">📏 ${esc(krSentence(k) || k.metric || 'Resultado clave ' + (ki+1))}</div>
+        <ul class="ini-list">${k.initiatives.map(n => `<li><span>🛠️</span><input data-b="ini|${n.id}|text" value="${esc(n.text)}" placeholder="¿Qué haremos?">
+          <input class="sm" data-b="ini|${n.id}|owner" value="${esc(n.owner || '')}" placeholder="🙋 Responsable"><input class="sm" type="date" data-b="ini|${n.id}|due" value="${esc(n.due || '')}">
+          <button class="x mut" data-act="delIni" data-id="${n.id}">×</button></li>`).join('')}</ul>
+        ${k.initiatives.length ? '' : '<p class="hint">Aún no hay acciones para este número.</p>'}
+        <form class="add-row" data-form="ini" data-id="${k.id}"><input name="t" maxlength="160" placeholder="＋ Nueva acción (ej: Promoción combo café + pan)" autocomplete="off"><button class="btn primary mut">Agregar</button></form>
+      </div>`).join('')}</div>` : '<div class="warn">Este objetivo aún no tiene resultados clave. <button class="btn small ghost" data-act="goto" data-i="3">Agregar</button></div>'}
+    </section>`;
+  }).join('');
+}
+
+/* ---------- Fase 5: revisión ---------- */
+function donut(pct, size = 170, color){
+  const r = size/2 - 14, c = 2*Math.PI*r, col = color || (pct >= 80 ? '#10B981' : pct >= 50 ? '#F59E0B' : '#EF4444');
+  return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}"><circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="#EDE9FE" stroke-width="16"/>
+    <circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="${col}" stroke-width="16" stroke-linecap="round" stroke-dasharray="${c*pct/100} ${c}" transform="rotate(-90 ${size/2} ${size/2})"/>
+    <text x="50%" y="52%" text-anchor="middle" dominant-baseline="middle" font-family="Baloo 2" font-size="${size/4.2}" font-weight="800" fill="#1E1B4B">${pct}${size > 120 ? '' : '%'}</text></svg>`;
+}
+function medalFor(s){ return s >= 90 ? '💎 Diamante' : s >= 75 ? '🥇 Oro' : s >= 55 ? '🥈 Plata' : '🥉 Bronce · ¡vamos a mejorarlos!'; }
+function posterHTML(){
+  const w = S.ws, objs = validObjs();
+  return `<div class="poster" id="poster">
+    <div class="poster-head"><div class="pe">🎯</div><div><h2>OKRs · ${esc(w.area)}</h2><div style="font-weight:800;opacity:.85">${esc(w.period_label)} · ${fmtDate(w.period_start)} → ${fmtDate(w.period_end)}</div></div></div>
+    <div class="poster-objs">${objs.map((o, i) => `<div class="p-obj" style="--oc:${objColor(o)}">
+      <div class="p-obj-h"><span class="p-num">${i+1}</span><span>${esc(o.text)} <span title="${o.type}">${o.type === 'comprometido' ? '🔒' : '🚀'}</span></span></div>
+      ${o.why ? `<div class="hint" style="margin-top:4px">💬 ${esc(o.why)}</div>` : ''}
+      ${o.krs.map(k => `<div class="p-kr"><div class="p-kr-t">📏 ${esc(krSentence(k) || k.metric || '—')}</div><div class="p-kr-o">🙋 ${esc(k.owner || 'Sin dueño')}</div>
+        ${k.initiatives.length ? `<ul>${k.initiatives.map(n => `<li>🛠️ ${esc(n.text)}${n.owner ? ` · <span class="hint">${esc(n.owner)}</span>` : ''}${n.due ? ` · <span class="hint">${fmtDate(n.due)}</span>` : ''}</li>`).join('')}</ul>` : ''}</div>`).join('')}
+    </div>`).join('') || '<p class="hint">Aún no hay objetivos.</p>'}</div></div>`;
+}
+function pRevision(){
+  const items = qualityItems(), s = qualityScore();
+  return `<div class="rev">
+    <div class="card score"><h2>Calificación de sus OKRs</h2>${donut(s)}<div class="medal">${medalFor(s)}</div>
+      <ul class="qlist">${items.map(it => `<li class="${it.ok ? '' : 'bad'}"><span>${it.ok ? '✅' : '⚠️'}</span><span class="qt">${it.t}<small>${it.w}</small></span>${it.ok ? '' : `<button class="btn small ghost" data-act="goto" data-i="${it.ph}">Arreglar →</button>`}</li>`).join('')}</ul></div>
+    <div>
+      <div class="viewtabs"><button class="btn ${S.revTab === 'poster' ? 'primary' : 'ghost'} small" data-act="revTab" data-k="poster">📋 Póster</button><button class="btn ${S.revTab === 'mapa' ? 'primary' : 'ghost'} small" data-act="revTab" data-k="mapa">🗺️ Mapa mental</button></div>
+      ${S.revTab === 'mapa' ? '<div id="fullmap" class="mindmap"></div>' : posterHTML()}
+    </div></div>`;
+}
+function drawFullMap(){
+  const el = $('#fullmap'); if (!el) return;
+  drawMindMap(el, {html:`🏢 ${esc(S.ws.area)}<div style="font-size:.8rem;opacity:.85">${esc(S.ws.period_label)}</div>`, children:validObjs().map(o => ({
+    html:'🎯 ' + esc(short(o.text, 70)), color:objColor(o), cls:'boxed',
+    children:o.krs.map(k => ({html:'📏 ' + esc(short(krSentence(k) || k.metric || '—', 60)) + (k.initiatives.length ? ` <span class="hint">· 🛠️${k.initiatives.length}</span>` : '')}))
+  }))});
+}
+
+/* ---------- Fase 6: celebración ---------- */
+function pCelebracion(){
+  const w = S.ws, d = w.data, objs = validObjs(), krs = allKRs(), inis = allInis();
+  const ppl = [...S.people].sort((a, b) => b.xp - a.xp);
+  const top = ppl.slice(0, 3), order = [1, 0, 2].filter(i => top[i]);
+  const heights = {0:130, 1:95, 2:70}, cols = {0:'#EAB308', 1:'#94A3B8', 2:'#D97706'};
+  return `<div class="celebrate">
+    <div class="trophy">🏆</div>
+    <h1 class="wow">¡Felicidades, ${esc(w.area)}!</h1>
+    <p class="lead">Construyeron sus OKRs para <b>${esc(w.period_label)}</b>. Ahora todos saben <b>a dónde vamos</b>, <b>cómo sabremos que llegamos</b> y <b>qué vamos a hacer</b>. ¡Gran trabajo en equipo! 👏</p>
+    <div class="stat-tiles">
+      <div class="stat"><div class="se">💡</div><div class="sn">${S.ideas.length}</div><div class="sl">Ideas</div></div>
+      <div class="stat"><div class="se">🎯</div><div class="sn">${objs.length}</div><div class="sl">Objetivos</div></div>
+      <div class="stat"><div class="se">📏</div><div class="sn">${krs.length}</div><div class="sl">Resultados clave</div></div>
+      <div class="stat"><div class="se">🛠️</div><div class="sn">${inis.length}</div><div class="sl">Acciones</div></div>
+      <div class="stat"><div class="se">🙌</div><div class="sn">${S.people.length}</div><div class="sl">Participantes</div></div>
+      <div class="stat"><div class="se">⚡</div><div class="sn">${d.xp}</div><div class="sl">XP del equipo</div></div>
+    </div>
+    ${top.length ? `<div class="sec-t">🌟 Nuestro equipo estrella</div>
+      <div class="podium">${order.map(i => `<div class="pod"><div class="pav">${esc(top[i].avatar)}</div><div>${esc(top[i].name)}</div><div class="hint">⚡ ${top[i].xp} XP</div><div class="pbox" style="height:${heights[i]}px;background:${cols[i]}">${i+1}</div></div>`).join('')}</div>
+      <div class="thanks">${ppl.map(p => `<span>${esc(p.avatar)} ${esc(p.name)}</span>`).join('')}</div>` : ''}
+    <div class="sec-t">🏅 Medallas del equipo</div>
+    <div class="badges">${Object.entries(BADGES).map(([k, b]) => `<div class="bdg ${d.badges.includes(k) ? '' : 'off'}"><div class="bi">${b.icon}</div><div class="bn">${b.name}</div><div class="bd">${b.desc}</div></div>`).join('')}</div>
+    <div class="sec-t">📋 Nuestro mapa de OKRs</div>
+    <div style="text-align:left">${posterHTML()}</div>
+    <div class="actions"><button class="btn ghost big" data-act="print">🖨️ Imprimir / PDF</button><button class="btn ghost big" data-act="csv">📊 Descargar Excel</button><button class="btn primary big" data-act="goto" data-i="7">📈 Empezar seguimiento</button></div>
+  </div>`;
+}
+
+/* ---------- Fase 7: seguimiento ---------- */
+function sparkline(k){
+  const pts = [Number(k.base), ...k.checkins.map(c => Number(c.value))];
+  if (pts.length < 2) return '';
+  const all = [...pts, Number(k.target)], mn = Math.min(...all), mx = Math.max(...all), W = 180, H = 40;
+  const xy = pts.map((v, i) => `${(i / (pts.length - 1)) * W},${H - 4 - ((v - mn) / Math.max(1e-9, mx - mn)) * (H - 8)}`).join(' ');
+  const ty = H - 4 - ((Number(k.target) - mn) / Math.max(1e-9, mx - mn)) * (H - 8);
+  return `<svg width="${W}" height="${H}" style="display:block;margin-top:6px"><line x1="0" x2="${W}" y1="${ty}" y2="${ty}" stroke="#10B981" stroke-dasharray="4 4"/><polyline points="${xy}" fill="none" stroke="#6C4CF1" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+}
+function pSeguimiento(){
+  const objs = validObjs(), krs = allKRs().filter(krComplete);
+  if (!krs.length) return `<div class="card empty"><div class="ee">📏</div><h2>Aún no hay resultados clave completos para seguir</h2><button class="btn primary" data-act="goto" data-i="3">Completar resultados clave</button></div>`;
+  const overall = Math.round(100 * krs.reduce((s, k) => s + krProgress(k), 0) / krs.length);
+  const el = Math.round(100 * elapsed());
+  const conf = ['😟','😐','😀'];
+  return `<div class="track-top">
+      <div class="card ring-card">${donut(overall, 110, '#6C4CF1')}<div><div class="rt">Avance de OKRs</div><div class="hint">Promedio de todos los resultados clave · Calificación ${(overall/100).toFixed(1)}</div></div></div>
+      <div class="card ring-card">${donut(el, 110, '#94A3B8')}<div><div class="rt">Tiempo transcurrido</div><div class="hint">${fmtDate(S.ws.period_start)} → ${fmtDate(S.ws.period_end)}</div></div></div>
+      <div class="card"><div class="rt" style="font-family:'Baloo 2';font-size:1.2rem">¿Cómo leo los colores?</div><div class="legend">
+        <span style="--c:#10B981">Verde: vamos al ritmo del tiempo</span><span style="--c:#F59E0B">Amarillo: un poco atrasados</span><span style="--c:#EF4444">Rojo: necesitamos ayuda</span><span style="--c:#EAB308">Dorado: ¡meta lograda!</span></div></div>
+    </div>
+    ${objs.map(o => {
+      const ks = o.krs.filter(krComplete); if (!ks.length) return '';
+      const op = Math.round(100 * ks.reduce((s, k) => s + krProgress(k), 0) / ks.length);
+      return `<section class="tobj" style="--oc:${objColor(o)}"><div class="tobj-h"><h2>🎯 ${esc(o.text)}</h2><span class="pill">${o.type === 'comprometido' ? '🔒 Comprometido' : '🚀 Aspiracional'}</span><span class="pill" style="font-size:1rem">${op}%</span></div>
+      <div class="tracks">${ks.map(k => {
+        const p = krProgress(k), stt = krStatus(k), last = k.checkins[k.checkins.length - 1];
+        return `<div class="card">
+          <div class="kr-sentence">📏 ${esc(krSentence(k))}</div>
+          <div class="pbar"><div class="fill" style="width:${Math.max(3, p*100)}%;background:${stt.c}"></div><div class="marker" style="left:${el}%" title="Dónde deberíamos ir según el tiempo"></div><div class="ptxt">${Math.round(p*100)}%</div></div>
+          <div class="track-nums"><span>📍 ${fmtVal(k.base, k.unit)}</span><span>Hoy <b>${fmtVal(krCurrent(k), k.unit)}</b></span><span>🏁 ${fmtVal(k.target, k.unit)}</span><span class="pill" style="background:${stt.c}22">${stt.t}</span><span>🙋 ${esc(k.owner || '—')}</span>${last ? `<span>${conf[last.conf] || ''} ${fmtDate(last.date)}</span>` : ''}</div>
+          ${sparkline(k)}
+          <form class="checkin" data-form="checkin" data-id="${k.id}">
+            <input type="number" step="any" name="v" placeholder="Valor de hoy" required>
+            <div class="conf" title="¿Qué tan seguros estamos de lograrlo?">${conf.map((e, i) => `<label><input type="radio" name="c" value="${i}" ${i === 1 ? 'checked' : ''}><span>${e}</span></label>`).join('')}</div>
+            <input name="n" placeholder="Nota (opcional)">
+            <button class="btn primary mut">✔ Registrar</button></form>
+          ${k.initiatives.length ? `<div class="ini-check">${k.initiatives.map(n => `<label><input type="checkbox" class="mut" data-change="iniDone" data-id="${n.id}" ${n.done ? 'checked' : ''}><span class="${n.done ? 'done' : ''}">🛠️ ${esc(n.text)}</span></label>`).join('')}</div>` : ''}
+        </div>`; }).join('')}</div></section>`;
+    }).join('')}`;
+}
+
+/* =====================================================================
+   VISTA — PARTICIPANTE (celular)
+   ===================================================================== */
+function vJoin(){
+  return `<div class="pv"><div class="hero" style="margin:10px 0 16px"><div class="logo-big" style="font-size:3.4rem">🎯</div><h1 style="font-size:2rem">¡Bienvenido al taller!</h1></div>
+    <form class="card pv-form" data-form="join">
+      <label class="lbl">🔑 Código del taller</label><input class="code-input" name="code" maxlength="6" required value="${esc(S.joinCode)}" placeholder="CÓDIGO">
+      <label class="lbl">😊 ¿Cómo te llamas?</label><input name="name" maxlength="30" required placeholder="Tu nombre">
+      <label class="lbl">🎭 Elige tu personaje</label>
+      <div class="avatars">${AVATARS.map((a, i) => `<label><input type="radio" name="av" value="${a}" ${i === 0 ? 'checked' : ''}><span>${a}</span></label>`).join('')}</div>
+      <button class="btn primary big" style="margin-top:10px">¡Entrar! 🚀</button>
+      <button type="button" class="link" data-act="toLanding">Volver</button>
+    </form></div>`;
+}
+function vPart(){
+  const p = S.part.participant, pub = S.pPub;
+  if (!pub) return `<div class="pv"><div class="card watch"><div class="we">⏳</div><p>Cargando…</p></div></div>`;
+  const P = PHASES[pub.phase] || PHASES[0];
+  let body = '';
+  if (!pub.active) body = `<div class="card watch"><div class="we">🔒</div><h2>El taller está en pausa</h2><p class="hint">La licencia de este taller no está vigente.</p></div>`;
+  else if (pub.phase === 1) {
+    const st = pub.idea_step || 'proponer';
+    body = `${st === 'proponer' ? `<form class="card pv-form" data-form="pidea"><label class="lbl">💡 ¿Qué te gustaría que logremos en ${esc(pub.period_label)}?</label>
+        <textarea name="t" rows="3" maxlength="140" required placeholder="Escribe tu idea…"></textarea><button class="btn primary big">Enviar idea ✨</button></form>` : ''}
+      ${st === 'votar' ? `<div class="card" style="text-align:center"><h2>⭐ ¡A votar!</h2><p id="pvStars" style="font-weight:900;font-size:1.2rem">${starsLeft()}</p><p class="hint">Toca la estrella de las ideas que más te gusten. Puedes quitar y mover tus estrellas.</p></div>` : ''}
+      ${st === 'elegir' ? `<div class="card" style="text-align:center"><h2>🎯 ¡Estamos eligiendo!</h2><p class="hint">Miren la pantalla: el equipo elige las ideas ganadoras.</p></div>` : ''}
+      <ul class="pv-ideas" id="pvList">${pvListHTML()}</ul>`;
+  } else if (pub.phase >= 6) body = `<div class="card watch"><div class="we">🏆</div><h1 class="wow" style="font-size:2.2rem">¡Felicidades!</h1><p style="font-weight:800">Tu equipo terminó sus OKRs. ¡Gracias por participar, ${esc(p.name)}! 🙌</p><p class="hint">Ganaste <b>⚡ ${S.pXp} XP</b></p></div>`;
+  else body = `<div class="card watch"><div class="we">👀</div><h2>¡Mira la pantalla principal!</h2><p class="hint">Estamos trabajando en: <b>${P.icon} ${P.name}</b>.<br>Participa en voz alta: tu opinión cuenta. 💬</p></div>`;
+  return `<div class="pv">
+    <header class="pv-head"><div class="pv-av">${esc(p.avatar)}</div><div><b>${esc(p.name)}</b><div class="hint">${esc(pub.name)}</div></div><div class="pv-xp" id="pvXp">⚡ ${S.pXp}</div></header>
+    <div class="pv-phase">Estamos en: ${P.icon} <b>${P.name}</b></div>
+    ${body}
+    <p style="text-align:center;margin-top:20px"><button class="link" data-act="leavePart">Salir del taller</button></p></div>`;
+}
+function starsLeft(){ const n = 5 - S.pVotes.length; return `Te quedan ${'⭐'.repeat(n)}${'☆'.repeat(5 - n)} (${n} de 5)`; }
+function pvListHTML(){
+  const st = (S.pPub && S.pPub.idea_step) || 'proponer';
+  let list = [...S.pIdeas];
+  if (st !== 'proponer') list.sort((a, b) => b.votes - a.votes); else list.reverse();
+  if (!list.length) return '<p class="hint" style="text-align:center">Aún no hay ideas. ¡Sé la primera persona! 🌱</p>';
+  return list.map(i => {
+    const voted = S.pVotes.includes(i.id);
+    return `<li style="--nc:${ideaColor(i.id)}"><span style="font-size:1.4rem">${esc(i.avatar || '🙂')}</span><span class="t">${esc(i.text)} ${i.mine ? '<span class="mine">Tuya</span>' : ''}</span>
+      ${st === 'votar' ? `<button class="vote-btn ${voted ? 'on' : ''}" data-act="pvote" data-id="${i.id}">${voted ? '⭐' : '☆'} ${i.votes}</button>` : st === 'elegir' ? `<b>⭐ ${i.votes}</b>` : ''}</li>`;
+  }).join('');
+}
+async function openParticipant(){ S.view = 'part'; S.pPub = null; render(); await refreshPart(true); clearInterval(partT); partT = setInterval(() => refreshPart(false), 4000); }
+async function refreshPart(full){
+  const pt = S.part; if (!pt) return;
+  try {
+    const pid = pt.participant.id;
+    const L = await Store.live(pt.code, pid), pub = L.pub;
+    if (!pub) { toast('Este taller ya no existe', 'err'); lsDel('okr_part'); clearInterval(partT); S.view = 'join'; return render(); }
+    const ideas = L.ideas, people = L.people, mv = L.myVotes;
+    const prev = S.pPub; S.pPub = pub; S.pIdeas = ideas; S.pPeople = people; S.pVotes = mv;
+    const me = people.find(x => x.me); S.pXp = me ? me.xp : 0;
+    if (full || !prev || prev.phase !== pub.phase || prev.idea_step !== pub.idea_step || prev.active !== pub.active) {
+      render(); if (pub.phase >= 6 && (!prev || prev.phase < 6)) confetti(220);
+    } else {
+      const l = $('#pvList'); if (l) l.innerHTML = pvListHTML();
+      const x = $('#pvXp'); if (x) x.textContent = '⚡ ' + S.pXp;
+      const s = $('#pvStars'); if (s) s.textContent = starsLeft();
+    }
+  } catch(e) { if (full) toast(esc(e.message), 'err'); }
+}
+
+/* =====================================================================
+   EVENTOS
+   ===================================================================== */
+function findObj(id){ return S.ws.data.objectives.find(o => o.id === id); }
+function findKR(id){ for (const o of S.ws.data.objectives) { const k = o.krs.find(k => k.id === id); if (k) return {o, k}; } return {}; }
+function findIni(id){ for (const o of S.ws.data.objectives) for (const k of o.krs) { const n = k.initiatives.find(n => n.id === id); if (n) return {o, k, n}; } return {}; }
+
+function onBind(t){
+  if (RO()) return;
+  const [kind, id, field] = t.dataset.b.split('|');
+  let target, val = t.value;
+  if (kind === 'ctx') target = S.ws.data.context;
+  else if (kind === 'obj') target = findObj(id);
+  else if (kind === 'kr') { target = findKR(id).k; if (field === 'base' || field === 'target') val = t.value === '' ? '' : Number(t.value); }
+  else if (kind === 'ini') target = findIni(id).n;
+  if (!target) return;
+  target[field] = val;
+  if (kind === 'obj') { const l = $(`[data-live="obj|${id}"]`); if (l) l.innerHTML = objLive(target); if ((target.text || '').trim().split(/\s+/).length >= 3) award('obj' + id, 30, '¡Objetivo escrito! 🎯'); }
+  if (kind === 'kr') {
+    const l = $(`[data-live="kr|${id}"]`); if (l) l.innerHTML = krLive(target);
+    const wv = $(`[data-live="krwarn|${id}"]`); if (wv) wv.innerHTML = krWarn(target);
+    if (krComplete(target)) award('kr' + id, 25, '¡Resultado clave listo! 📏');
+    if ((target.owner || '').trim().length > 2) award('own' + id, 5, '¡Ya tiene dueño! 🙋');
+    drawKRMapSoon();
+  }
+  if (kind === 'ctx' && val.trim().length > 15) award('ctx_' + field, 10, field === 'mision' ? '¡Misión clara!' : '¡Visión clara!');
+  if (kind === 'ini' && field !== 'text' && n_ok(target)) award('inidone' + id, 5, '¡Acción con responsable y fecha!');
+  saveSoon(); checkBadges();
+}
+function n_ok(n){ return (n.owner || '').trim() && n.due; }
+
+const ACT = {
+  demoLogin: async el => { try { S.user = await Store.signIn(el.dataset.e, 'demo'); goHome(); } catch(e) { toast(esc(e.message), 'err'); } },
+  logout: async () => { stopTimers(); await Store.signOut(); S.user = null; S.ws = null; S.view = 'landing'; render(); },
+  reload: () => location.reload(),
+  toLanding: () => { history.replaceState(null, '', location.pathname); S.view = 'landing'; render(); },
+  home: () => { stopTimers(); clearInterval(tickT); if (S.user && S.user.role === 'superadmin' && S.client) loadClient(S.client.id).catch(e => toast(e.message, 'err')); else goHome(); },
+  backSuper: () => loadSuper().catch(e => toast(e.message, 'err')),
+  closeModal: () => closeModal(),
+  // super admin
+  newClient: () => openModal(clientForm()),
+  editClient: el => openModal(clientForm(S.clients.find(c => c.id === el.dataset.id))),
+  renew: async el => {
+    const c = S.clients.find(c => c.id === el.dataset.id), m = Number(el.dataset.m);
+    const from = c.valid_to > todayISO() ? c.valid_to : todayISO();
+    try { await Store.saveClient({...c, valid_to:addMonths(from, m), status:'activo'}); toast(`✅ ${esc(c.name)}: +${m === 12 ? '1 año' : m + ' meses'}`, 'ok'); loadSuper(); } catch(e) { toast(esc(e.message), 'err'); }
+  },
+  toggleClient: async el => {
+    const c = S.clients.find(c => c.id === el.dataset.id);
+    try { await Store.saveClient({...c, status:c.status === 'activo' ? 'suspendido' : 'activo'}); loadSuper(); } catch(e) { toast(esc(e.message), 'err'); }
+  },
+  assignAdmin: el => {
+    const c = S.clients.find(c => c.id === el.dataset.id), admins = S.admins[c.id] || [];
+    openModal(`<form class="modal-form" data-form="assign" data-id="${c.id}"><h2>👤 Usuario y contraseña</h2><p>Empresa: <b>${esc(c.name)}</b></p>
+      ${admins.length ? `<div class="period-preview">Usuarios actuales: ${admins.map(a => `<span class="pill" style="margin:2px">${esc(a)} <button type="button" class="link" style="padding:0 2px" data-act="delUser" data-e="${esc(a)}" title="Quitar acceso">✕</button></span>`).join('')}</div>` : ''}
+      <label>Correo del usuario<input type="email" name="email" required placeholder="persona@empresa.com"></label>
+      <label>Contraseña<div class="row" style="flex-wrap:nowrap"><input name="password" id="newPass" required minlength="6" placeholder="mínimo 6 caracteres" autocomplete="off"><button type="button" class="btn ghost" data-act="genPass">🎲 Generar</button></div></label>
+      <p class="hint">Si el correo ya existe, se le cambia la contraseña. Copia la contraseña y envíasela al cliente junto con la liga.</p>
+      <div class="modal-actions"><button type="button" class="btn ghost" data-act="closeModal">Cancelar</button><button class="btn primary">Guardar</button></div></form>`);
+  },
+  genPass: () => { const A = 'abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789'; const v = Array.from(crypto.getRandomValues(new Uint32Array(10)), n => A[n % A.length]).join(''); const i = $('#newPass'); if (i) { i.value = v; i.select(); } },
+  delUser: async el => {
+    if (!(await confirmBox(`¿Quitar el acceso a <b>${esc(el.dataset.e)}</b>?`, 'Sí, quitar', 'No'))) return;
+    try { await Store.deleteUser(el.dataset.e); toast('Acceso eliminado', 'ok'); loadSuper(); } catch(e) { toast(esc(e.message), 'err'); }
+  },
+  viewClient: el => loadClient(el.dataset.id).catch(e => toast(e.message, 'err')),
+  // cliente
+  newWs: () => { if (!S.active) return toast('🔒 Licencia no vigente', 'warn'); openModal(newWsForm()); },
+  openWs: el => openWorkshop(el.dataset.id),
+  delWs: async (el, e) => {
+    e.stopPropagation();
+    if (!(await confirmBox('¿Eliminar este taller y todas sus ideas? No se puede deshacer.', 'Sí, eliminar', 'No'))) return;
+    try { await Store.deleteWorkshop(el.dataset.id); loadClient(S.client.id); } catch(err) { toast(esc(err.message), 'err'); }
+  },
+  // taller
+  qr: () => { openModal(`<div style="text-align:center"><h2>📱 ¡Únete al taller!</h2><p class="hint">Escanea el código o entra a la página y escribe:</p><div class="join-code" style="font-size:4rem;margin:10px 0">${esc(S.ws.code)}</div><div id="qrBig" class="qr-small"></div><p class="hint" style="word-break:break-all">${esc(joinURL())}</p><div class="modal-actions" style="justify-content:center"><button class="btn primary" data-act="closeModal">Listo</button></div></div>`); makeQR('#qrBig', 260); },
+  goto: el => { const i = Number(el.dataset.i); if (i > S.ws.data.maxPhase + 1 && !RO()) return; goPhase(i); },
+  prev: () => { if (S.ws.phase > 0) goPhase(S.ws.phase - 1); },
+  next: async () => {
+    const w = S.ws, d = w.data, i = w.phase;
+    if (RO()) { if (i < d.maxPhase) goPhase(i + 1); return; }
+    if (i === 1) {
+      if (d.ideaStep === 'proponer') { if (!S.ideas.length) return toast('💡 Agreguen al menos una idea', 'warn'); d.ideaStep = 'votar'; S.timerEnd = null; saveSoon(); toast('⭐ ¡Hora de votar! Cada quien tiene 5 estrellas', 'ok'); return render(); }
+      if (d.ideaStep === 'votar') { d.ideaStep = 'elegir'; saveSoon(); return render(); }
+      if (!d.selected.length && !validObjs().length) {
+        const ok = await confirmBox('No han elegido ideas. ¿Elegimos las 3 con más estrellas?', 'Sí, elegir el top 3', 'Escribiré los objetivos');
+        if (ok) d.selected = [...S.ideas].sort((a, b) => b.votes - a.votes).slice(0, 3).map(x => x.id);
+      }
+      const n = convertSelected(); if (n) toast(`🎯 ${n} idea${n > 1 ? 's' : ''} convertida${n > 1 ? 's' : ''} en objetivo${n > 1 ? 's' : ''}`, 'ok');
+    }
+    const g = gate(i);
+    if (g) { if (g.hard) return toast(g.msg, 'warn'); if (!(await confirmBox(g.msg, 'Seguir de todos modos', 'Me quedo a mejorar'))) return; }
+    award('fase' + i, 20, `¡Paso ${i + 1} completado!`); confetti(90);
+    goPhase(i + 1);
+  },
+  delSticky: el => { if (blocked()) return; const c = S.ws.data.context; c[el.dataset.k] = c[el.dataset.k].filter(s => s.id !== el.dataset.id); saveSoon(); render(); },
+  ideaStep: el => { if (blocked()) return; S.ws.data.ideaStep = el.dataset.k; saveSoon(); render(); },
+  timer: el => { const m = Number(el.dataset.m); S.timerEnd = m ? Date.now() + m * 60000 : null; const side = $('#ideaSide'); if (side) { side.innerHTML = ideaSideHTML(); makeQR('#qrSmall', 130); } if (m) toast(`⏱️ ¡${m} minutos para escribir ideas!`, 'ok'); },
+  vote: async el => { if (blocked()) return; try { await Store.voteIdea(S.ws.code, null, el.dataset.id); S.sig = ''; refreshIdeas(); } catch(e) { toast(esc(e.message), 'err'); } },
+  delIdea: async el => { if (blocked()) return; try { await Store.deleteIdea(el.dataset.id, S.ws.code); S.ws.data.selected = S.ws.data.selected.filter(x => x !== el.dataset.id); saveSoon(); S.sig = ''; refreshIdeas(); } catch(e) { toast(esc(e.message), 'err'); } },
+  pick: el => {
+    if (blocked()) return;
+    const d = S.ws.data, id = el.dataset.id;
+    if (d.selected.includes(id)) d.selected = d.selected.filter(x => x !== id);
+    else { if (d.selected.length >= 3) return toast('🤏 Máximo 3: ¡menos es más!', 'warn'); d.selected.push(id); toast('🎯 ¡Idea elegida!', 'ok'); }
+    saveSoon(); drawIdeaMap(); const side = $('#ideaSide'); if (side) { side.innerHTML = ideaSideHTML(); makeQR('#qrSmall', 130); }
+  },
+  convert: () => ACT.next(),
+  addObj: () => { if (blocked()) return; S.ws.data.objectives.push({id:uid(), text:'', why:'', type:'aspiracional', align:'', krs:[], parking:[]}); saveSoon(); render(); const t = $$('.card.obj textarea'); if (t.length) t[t.length - 1].focus(); },
+  delObj: async el => { if (blocked()) return; if (!(await confirmBox('¿Quitar este objetivo y sus resultados clave?', 'Sí, quitar', 'No'))) return; S.ws.data.objectives = S.ws.data.objectives.filter(o => o.id !== el.dataset.id); saveSoon(); render(); },
+  objType: el => { if (blocked()) return; findObj(el.dataset.id).type = el.dataset.k; saveSoon(); render(); },
+  krTab: el => { S.krTab = el.dataset.id; render(); },
+  addKR: el => { if (blocked()) return; findObj(el.dataset.id).krs.push({id:uid(), metric:'', unit:'#', base:'', target:'', owner:'', initiatives:[], checkins:[]}); saveSoon(); render(); const t = $$('.card.kr input.big-text'); if (t.length) t[t.length - 1].focus(); },
+  delKR: el => { if (blocked()) return; const {o} = findKR(el.dataset.id); o.krs = o.krs.filter(k => k.id !== el.dataset.id); saveSoon(); render(); },
+  krUnit: el => { if (blocked()) return; const {k} = findKR(el.dataset.id); k.unit = el.dataset.k; saveSoon(); render(); },
+  krToTask: el => {
+    if (blocked()) return; const {o, k} = findKR(el.dataset.id);
+    o.krs = o.krs.filter(x => x.id !== k.id); o.parking.push({id:uid(), text:k.metric});
+    toast('📦 Guardado en "¿Qué vamos a hacer?". ¡Ahora piensen qué número cambia!', 'ok'); saveSoon(); render();
+  },
+  delIni: el => { if (blocked()) return; const {k} = findIni(el.dataset.id); k.initiatives = k.initiatives.filter(n => n.id !== el.dataset.id); saveSoon(); render(); },
+  revTab: el => { S.revTab = el.dataset.k; render(); },
+  print: () => window.print(),
+  csv: () => exportCSV(),
+  // reporte y borrado de clientes
+  report: el => openReport(el.dataset.id || S.client.id, S.view),
+  backReport: () => { const R = S.report; if (R.back === 'super') loadSuper().catch(e => toast(e.message, 'err')); else loadClient(R.client.id).catch(e => toast(e.message, 'err')); },
+  csvSum: () => {
+    const R = S.report;
+    const rows = [['Taller','Área','Periodo','Inicio','Fin','Código','Creado','Actualizado','Paso actual','Terminado','Participantes','Ideas','Objetivos','Resultados clave','Acciones','Acciones hechas','Check-ins','Calidad','Avance %']];
+    R.workshops.forEach(w => { const m = wsMetrics(w); rows.push([w.name, w.area, w.period_label, w.period_start, w.period_end, w.code, String(w.created_at || '').slice(0, 10), String(w.updated_at || '').slice(0, 10), PHASES[w.phase || 0].short, m.finished ? 'Sí' : 'No', m.people, m.ideas, m.objs, m.krs, m.inis, m.done, m.checkins, m.score ?? '', m.prog ?? '']); });
+    downloadCSV(rows, `Reporte_${slug(R.client.name)}_${todayISO()}.csv`);
+  },
+  csvDet: () => downloadCSV(allWsDetailRows(S.report.workshops), `Detalle_OKR_${slug(S.report.client.name)}_${todayISO()}.csv`),
+  delClient: async el => {
+    const c = S.clients.find(c => c.id === el.dataset.id); let list = [];
+    try { list = await Store.listWorkshops(c.id); } catch(e) {}
+    S.delCache = {client:c, workshops:list.map(w => ensureData(JSON.parse(JSON.stringify(w))))};
+    openModal(`<form class="modal-form" data-form="delClient" data-id="${c.id}">
+      <div style="text-align:center;font-size:3.2rem">⚠️</div><h2 style="text-align:center">Eliminar cliente</h2>
+      <p>Vas a borrar <b>${esc(c.name)}</b> y <b>todo</b> su contenido: <b>${list.length} taller${list.length === 1 ? '' : 'es'}</b>, ideas, votos, participantes y seguimiento. <b>Esto no se puede deshacer.</b></p>
+      <button type="button" class="btn ghost" data-act="backupClient">📥 Descargar respaldo en Excel primero</button>
+      <label>Para confirmar, escribe el nombre exacto: <span style="color:var(--bad)">${esc(c.name)}</span><input name="confirm" autocomplete="off" placeholder="${esc(c.name)}"></label>
+      <p class="hint">También se eliminan sus usuarios y contraseñas.</p>
+      <div class="modal-actions"><button type="button" class="btn ghost" data-act="closeModal">Cancelar</button><button class="btn danger">🗑️ Eliminar definitivamente</button></div></form>`);
+  },
+  backupClient: () => { const D = S.delCache; downloadCSV(allWsDetailRows(D.workshops), `Respaldo_${slug(D.client.name)}_${todayISO()}.csv`); toast('📥 Respaldo descargado', 'ok'); },
+  // participante
+  pvote: async el => {
+    const pt = S.part;
+    try {
+      const r = await Store.voteIdea(pt.code, pt.participant.id, el.dataset.id);
+      if (!r.ok) toast(esc(r.msg || 'No se pudo votar'), 'warn'); else toast(r.voted ? '⭐ ¡Voto registrado! +2 XP' : 'Estrella devuelta ↩️', r.voted ? 'xp' : '');
+      refreshPart(false);
+    } catch(e) { toast(esc(e.message), 'err'); }
+  },
+  leavePart: () => { lsDel('okr_part'); clearInterval(partT); S.part = null; history.replaceState(null, '', location.pathname); S.view = 'landing'; render(); }
+};
+
+function gate(i){
+  const objs = validObjs();
+  if (i === 2 && !objs.length) return {hard:true, msg:'🎯 Escriban al menos un objetivo'};
+  if (i === 3 && objs.some(o => !o.krs.some(krComplete))) return {hard:true, msg:'📏 Cada objetivo necesita al menos un resultado clave completo (hoy y meta)'};
+  if (i === 4 && allKRs().some(k => !k.initiatives.length)) return {msg:'Algunos resultados clave aún no tienen acciones. ¿Quieren seguir?'};
+  if (i === 5 && qualityScore() < 60) return {msg:`La calificación es ${qualityScore()}. ¿Seguimos o mejoramos primero?`};
+  return null;
+}
+
+const FORMS = {
+  gocode: f => { const c = f.code.value.trim().toUpperCase(); if (!c) return; S.joinCode = c; const sv = getPart(); if (sv && sv.code === c) { S.part = sv; return openParticipant(); } S.view = 'join'; render(); },
+  login: async f => { try { S.user = await Store.signIn(f.email.value, f.pass.value); goHome(); } catch(e) { toast(esc(e.message), 'err'); } },
+  saveClient: async f => {
+    const c = {id:f.id.value || undefined, name:f.name.value.trim(), contact:f.contact.value.trim(), valid_from:f.valid_from.value, valid_to:f.valid_to.value, status:f.status.value};
+    if (c.valid_to < c.valid_from) return toast('La fecha final debe ser después de la inicial', 'warn');
+    try { await Store.saveClient(c); closeModal(); toast('✅ Cliente guardado', 'ok'); loadSuper(); } catch(e) { toast(esc(e.message), 'err'); }
+  },
+  delClient: async f => {
+    const c = S.clients.find(c => c.id === f.dataset.id);
+    if (f.confirm.value.trim() !== c.name.trim()) return toast('El nombre no coincide. Escríbelo exactamente igual.', 'warn');
+    try { await Store.deleteClient(c.id); closeModal(); toast(`🗑️ ${esc(c.name)} fue eliminado`, 'ok'); loadSuper(); } catch(e) { toast(esc(e.message), 'err'); }
+  },
+  assign: async f => { try { const r = await Store.setUser(f.email.value, f.password.value, f.dataset.id); closeModal(); toast(esc(r || 'Listo'), 'ok'); loadSuper(); } catch(e) { toast(esc(e.message), 'err'); } },
+  newWs: async f => {
+    const level = f.level.value, type = f.ptype.value, start = f.start.value || todayISO(), info = periodInfo(type, start);
+    const area = level === 'empresa' ? S.client.name : (f.area.value.trim() || 'Mi equipo');
+    const w = {client_id:S.client.id, name:f.name.value.trim(), area, level, period_type:type, period_label:info.label, period_start:start, period_end:info.end, phase:0, data:newWorkshopData()};
+    try { const created = await Store.createWorkshop(w); closeModal(); confetti(120); toast('🎉 ¡Taller creado!', 'ok'); openWorkshop(created.id); } catch(e) { toast(esc(e.message), 'err'); }
+  },
+  sticky: f => {
+    if (blocked()) return; const t = f.t.value.trim(); if (!t) return;
+    const id = uid(); S.ws.data.context[f.dataset.k].push({id, text:t}); award('st' + id, 5, '¡Nota agregada!'); saveSoon();
+    const k = f.dataset.k; render(); const nf = $(`form[data-form="sticky"][data-k="${k}"] input`); if (nf) nf.focus();
+  },
+  idea: async f => {
+    if (blocked()) return; const t = f.t.value.trim(); if (!t) return;
+    try { const idea = await Store.addIdea(S.ws.code, null, 'Equipo', '🧑‍🏫', t); f.t.value = ''; award('idea' + idea.id, 5, '¡Idea agregada! 💡'); S.sig = ''; await refreshIdeas(); f.t.focus(); } catch(e) { toast(esc(e.message), 'err'); }
+  },
+  ini: f => {
+    if (blocked()) return; const t = f.t.value.trim(); if (!t) return;
+    const {k} = findKR(f.dataset.id); const id = uid(); k.initiatives.push({id, text:t, owner:'', due:'', done:false});
+    award('ini' + id, 15, '¡Acción agregada! 🛠️'); saveSoon(); render(); checkBadges();
+    const nf = $(`form[data-form="ini"][data-id="${f.dataset.id}"] input`); if (nf) nf.focus();
+  },
+  checkin: f => {
+    if (blocked()) return; const v = f.v.value; if (!isNum(v)) return toast('Escribe el valor de hoy', 'warn');
+    const {k} = findKR(f.dataset.id); const before = krProgress(k);
+    k.checkins.push({date:todayISO(), value:Number(v), conf:Number(f.c.value), note:f.n.value.trim()}); k.current = Number(v);
+    award('ci' + k.id + todayISO(), 10, '¡Check-in registrado! 📈');
+    const p = krProgress(k);
+    if (p >= 1 && before < 1) { showPop('🥇', '¡Meta alcanzada!', short(k.metric, 40), '¡Lo lograron, equipo!'); confetti(250); }
+    else if (p >= 0.7 && before < 0.7) { toast('🟢 ¡Ya pasaron el 70%! Zona de éxito', 'ok'); confetti(120); }
+    saveSoon(); render(); checkBadges();
+  },
+  join: async f => {
+    const code = f.code.value.trim().toUpperCase(), name = f.name.value.trim(), av = (f.querySelector('input[name=av]:checked') || {}).value || '🙂';
+    if (!code || !name) return;
+    try {
+      const r = await Store.join(code, name, av);
+      S.part = {code, participant:r.participant}; lsSet('okr_part', JSON.stringify(S.part));
+      history.replaceState(null, '', location.pathname + '?code=' + code);
+      toast(`¡Hola ${esc(name)}! ${esc(av)} Bienvenido`, 'ok'); confetti(80); openParticipant();
+    } catch(e) { toast(esc(e.message), 'err'); }
+  },
+  pidea: async f => {
+    const t = f.t.value.trim(); if (!t) return; const pt = S.part;
+    try { await Store.addIdea(pt.code, pt.participant.id, pt.participant.name, pt.participant.avatar, t); f.t.value = ''; toast('💡 ¡Gran idea! +10 XP', 'xp'); refreshPart(false); } catch(e) { toast(esc(e.message), 'err'); }
+  }
+};
+const CHG = {
+  ppv: () => { const f = $('#newWsForm'); if (!f) return; $('#ppv').innerHTML = periodPreview(f.ptype.value, f.start.value || todayISO()); f.area.closest('label').style.display = f.level.value === 'area' ? '' : 'none'; },
+  assignPark: el => {
+    if (blocked() || !el.value) return; const o = findObj(el.dataset.o); const p = o.parking.find(x => x.id === el.dataset.id);
+    const k = o.krs.find(k => k.id === el.value); const id = uid();
+    k.initiatives.push({id, text:p.text, owner:'', due:'', done:false}); o.parking = o.parking.filter(x => x !== p);
+    award('ini' + id, 15, '¡Acción asignada! 🛠️'); saveSoon(); render();
+  },
+  iniDone: el => { if (blocked()) return; const {n} = findIni(el.dataset.id); n.done = el.checked; if (n.done) award('done' + n.id, 10, '¡Acción terminada! ✅'); saveSoon(); render(); }
+};
+function getPart(){ try { return JSON.parse(lsGet('okr_part') || 'null'); } catch(e) { return null; } }
+
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-act]'); if (!t || t.disabled) return;
+  const fn = ACT[t.dataset.act]; if (fn) { e.preventDefault(); fn(t, e); }
+});
+document.addEventListener('submit', e => { const f = e.target.closest('form[data-form]'); if (!f) return; e.preventDefault(); const fn = FORMS[f.dataset.form]; if (fn) fn(f, e); });
+document.addEventListener('input', e => { if (e.target.dataset && e.target.dataset.b) onBind(e.target); });
+document.addEventListener('change', e => {
+  const t = e.target;
+  if (t.dataset && t.dataset.change && CHG[t.dataset.change]) CHG[t.dataset.change](t, e);
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && $('#modal').classList.contains('on')) closeModal(); });
+let rzT; window.addEventListener('resize', () => { clearTimeout(rzT); rzT = setTimeout(() => { if (S.view !== 'ws') return; const k = PHASES[S.ws.phase].key; if (k === 'ideas') drawIdeaMap(); if (k === 'krs') drawKRMap(); if (k === 'revision') drawFullMap(); }, 200); });
+
+const DETAIL_HEAD = ['Objetivo','Tipo','Por qué','Resultado clave','Unidad','Hoy (inicio)','Meta','Actual','Avance %','Dueño','Acción','Responsable','Fecha','Hecha'];
+function withWs(w, fn){ const prev = S.ws; S.ws = w; try { return fn(); } finally { S.ws = prev; } }
+function detailRows(w){
+  return withWs(w, () => {
+    const rows = [];
+    validObjs().forEach(o => {
+      if (!o.krs.length) rows.push([o.text, o.type, o.why]);
+      o.krs.forEach(k => {
+        const base = [o.text, o.type, o.why, k.metric, k.unit, k.base, k.target, krCurrent(k), Math.round(krProgress(k) * 100), k.owner];
+        if (!k.initiatives.length) rows.push(base);
+        k.initiatives.forEach(n => rows.push([...base, n.text, n.owner, n.due, n.done ? 'Sí' : 'No']));
+      });
+    });
+    return rows;
+  });
+}
+const slug = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^\w]+/g, '_');
+function downloadCSV(rows, filename){
+  const csv = rows.map(r => r.map(v => `"${String(v ?? '').replace(/"/g, '""')}"`).join(',')).join('\r\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob(['﻿' + csv], {type:'text/csv;charset=utf-8'}));
+  a.download = filename;
+  document.body.appendChild(a); a.click(); a.remove();
+}
+function exportCSV(){ downloadCSV([DETAIL_HEAD, ...detailRows(S.ws)], `OKR_${slug(S.ws.area + '_' + S.ws.period_label)}.csv`); }
+function allWsDetailRows(list){
+  const rows = [['Taller','Área','Periodo','Código', ...DETAIL_HEAD]];
+  list.forEach(w => { const d = detailRows(w); if (!d.length) rows.push([w.name, w.area, w.period_label, w.code]); d.forEach(r => rows.push([w.name, w.area, w.period_label, w.code, ...r])); });
+  return rows;
+}
+
+/* =====================================================================
+   REPORTE DE TALLERES POR CLIENTE
+   ===================================================================== */
+function wsMetrics(w){
+  return withWs(w, () => {
+    const objs = validObjs(), krs = allKRs(), inis = allInis(), ck = krs.filter(krComplete);
+    const st = (S.report.stats || {})[w.id] || {ideas:0, participants:0};
+    return {
+      objs:objs.length, krs:krs.length, inis:inis.length, done:inis.filter(n => n.done).length,
+      ideas:st.ideas, people:st.participants, score:objs.length ? qualityScore() : null,
+      prog:ck.length && ck.some(k => k.checkins.length) ? Math.round(100 * ck.reduce((s, k) => s + krProgress(k), 0) / ck.length) : null,
+      finished:(w.data.maxPhase || 0) >= 6, checkins:krs.reduce((s, k) => s + k.checkins.length, 0)
+    };
+  });
+}
+function vReport(){
+  const R = S.report, c = R.client, s = clientStatus(c);
+  const ms = R.workshops.map(w => ({w, m:wsMetrics(w)}));
+  const sum = k => ms.reduce((a, x) => a + (x.m[k] || 0), 0);
+  const avgOf = k => { const v = ms.filter(x => x.m[k] !== null); return v.length ? Math.round(v.reduce((a, x) => a + x.m[k], 0) / v.length) : null; };
+  const avgProg = avgOf('prog'), avgScore = avgOf('score');
+  const tile = (e, n, l) => `<div class="tile"><div class="te">${e}</div><div><div class="tn">${n}</div><div class="tl">${l}</div></div></div>`;
+  return `${topbar('📊 Reporte', `<button class="btn ghost small" data-act="backReport">⬅ Volver</button>`)}
+  <main class="container report">
+    <div class="card report-head">
+      <div><h1>📊 Reporte de talleres</h1>
+        <div class="hint" style="margin-top:6px;font-weight:700">🏢 <b>${esc(c.name)}</b> · ${s.label} · Vigencia ${fmtDate(c.valid_from)} → ${fmtDate(c.valid_to)} · Generado el ${fmtDate(todayISO())}</div></div>
+      <div class="row no-print"><button class="btn ghost" data-act="print">🖨️ Imprimir / PDF</button><button class="btn ghost" data-act="csvSum">📊 Excel resumen</button><button class="btn ghost" data-act="csvDet">📋 Excel detalle</button></div>
+    </div>
+    <div class="tiles rtiles">
+      ${tile('🧩', ms.length, 'Talleres')}
+      ${tile('🏆', ms.filter(x => x.m.finished).length, 'Terminados')}
+      ${tile('🙌', sum('people'), 'Participantes')}
+      ${tile('💡', sum('ideas'), 'Ideas')}
+      ${tile('🎯', sum('objs'), 'Objetivos')}
+      ${tile('📏', sum('krs'), 'Resultados clave')}
+      ${tile('🛠️', `${sum('done')}/${sum('inis')}`, 'Acciones hechas')}
+      ${tile('⭐', avgScore === null ? '—' : avgScore, 'Calidad promedio')}
+      ${tile('📈', avgProg === null ? '—' : avgProg + '%', 'Avance promedio')}
+      ${tile('✔️', sum('checkins'), 'Check-ins')}
+    </div>
+    ${ms.length ? `<div class="card" style="padding:0;overflow:auto">
+      <table class="rtable"><thead><tr><th>Taller</th><th>Periodo</th><th>Creado</th><th>Paso</th><th>🙌</th><th>💡</th><th>🎯</th><th>📏</th><th>🛠️</th><th>Calidad</th><th>Avance</th><th>Actualizado</th><th class="no-print"></th></tr></thead>
+      <tbody>${ms.map(({w, m}) => { const P = PHASES[w.phase || 0]; return `<tr>
+        <td><b>${esc(w.name)}</b><div class="hint">${esc(w.area)} · 🔑 ${esc(w.code)}</div></td>
+        <td>${esc(w.period_label)}<div class="hint">${fmtDate(w.period_start)} → ${fmtDate(w.period_end)}</div></td>
+        <td>${fmtDate(String(w.created_at || '').slice(0, 10))}</td>
+        <td>${m.finished ? '🏆 ' : ''}${P.icon} ${P.short}</td>
+        <td class="n">${m.people}</td><td class="n">${m.ideas}</td><td class="n">${m.objs}</td><td class="n">${m.krs}</td><td class="n">${m.done}/${m.inis}</td>
+        <td class="n">${m.score === null ? '—' : `<span class="pill" style="background:${m.score >= 80 ? '#D1FAE5' : m.score >= 55 ? '#FEF3C7' : '#FEE2E2'}">${m.score}</span>`}</td>
+        <td class="n">${m.prog === null ? '<span class="hint">Sin check-ins</span>' : m.prog + '%'}</td>
+        <td>${fmtDate(String(w.updated_at || '').slice(0, 10))}</td>
+        <td class="no-print"><button class="btn ghost small" data-act="openWs" data-id="${w.id}">Abrir</button></td></tr>`; }).join('')}</tbody></table></div>` : '<div class="card empty"><div class="ee">📭</div><p>Este cliente aún no tiene talleres.</p></div>'}
+    ${ms.map(({w, m}) => withWs(w, () => { const krs = allKRs().filter(krComplete); return `<section class="rdetail">
+      <h2 class="sec-t">🧩 ${esc(w.name)} <span class="hint" style="font-family:Nunito;font-size:1rem">· ${esc(w.area)} · ${esc(w.period_label)}</span></h2>
+      ${m.objs ? posterHTML() : '<p class="hint">Aún no tiene objetivos.</p>'}
+      ${krs.length ? `<div class="card" style="margin-top:12px;padding:0;overflow:auto"><table class="rtable"><thead><tr><th>Objetivo</th><th>Resultado clave</th><th>Inicio</th><th>Actual</th><th>Meta</th><th>Avance</th><th>Estado</th><th>Dueño</th></tr></thead><tbody>
+        ${validObjs().flatMap(o => o.krs.filter(krComplete).map(k => { const st = krStatus(k); return `<tr><td>${esc(short(o.text, 50))}</td><td>${esc(k.metric)}</td><td class="n">${fmtVal(k.base, k.unit)}</td><td class="n"><b>${fmtVal(krCurrent(k), k.unit)}</b></td><td class="n">${fmtVal(k.target, k.unit)}</td><td class="n">${Math.round(krProgress(k) * 100)}%</td><td>${k.checkins.length ? st.t : '<span class="hint">Sin check-ins</span>'}</td><td>${esc(k.owner || '—')}</td></tr>`; })).join('')}
+      </tbody></table></div>` : ''}</section>`; })).join('')}
+  </main>`;
+}
+async function openReport(cid, back){
+  try {
+    const client = await Store.getClient(cid);
+    const [list, stats] = await Promise.all([Store.listWorkshops(cid), Store.workshopStats(cid)]);
+    S.report = {client, workshops:list.map(w => ensureData(JSON.parse(JSON.stringify(w)))), stats, back};
+    S.view = 'report'; render(); window.scrollTo(0, 0);
+  } catch(e) { toast(esc(e.message), 'err'); }
+}
+
+/* =====================================================================
+   ARRANQUE
+   ===================================================================== */
+(async function boot(){
+  try {
+    const r = await fetch('/api', {method:'POST', headers:{'content-type':'application/json'}, body:JSON.stringify({action:'ping'})});
+    if (r.ok) { const j = await r.json(); if (j && j.ok) { DEMO = false; Store = ApiStore; API_CONFIGURED = !!j.configured; } }
+  } catch(e) {}
+  const code = new URLSearchParams(location.search).get('code');
+  if (code) {
+    const sv = getPart();
+    if (sv && sv.code === code.toUpperCase()) { S.part = sv; return openParticipant(); }
+    S.joinCode = code.toUpperCase(); S.view = 'join'; return render();
+  }
+  try { S.user = await Store.current(); } catch(e) {}
+  if (S.user) return goHome();
+  S.view = 'landing'; render();
+})();
+</script>
+</body>
+</html>
