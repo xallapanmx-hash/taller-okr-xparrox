@@ -1,0 +1,4 @@
+   [build]
+     base = "taller-okr-netlify"
+     publish = "public"
+     functions = "netlify/functions"
